@@ -337,6 +337,105 @@
     els.forEach(el => io.observe(el));
   }
 
+  /* ============== MUZYKA W TLE ============== */
+  function initMusic() {
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicToggle');
+    if (!audio || !btn) return;
+
+    const TARGET_VOLUME = 0.35; // odpowiedni poziom głośności — ambient, nie dominujący
+    const STORAGE_KEY = 'hsMusicMuted';
+    audio.volume = 0;
+
+    let userMuted = false;
+    try {
+      userMuted = localStorage.getItem(STORAGE_KEY) === '1';
+    } catch (_) { /* localStorage niedostępny (np. Safari private mode) — ignoruj */ }
+
+    function fadeVolumeTo(target, duration = 900) {
+      const start = audio.volume;
+      const startTime = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - startTime) / duration);
+        audio.volume = start + (target - start) * t;
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function setUIState(playing, muted) {
+      btn.classList.toggle('is-playing', playing && !muted);
+      btn.classList.toggle('is-muted', muted || !playing);
+      btn.setAttribute('aria-pressed', (!muted && playing) ? 'true' : 'false');
+    }
+
+    function persistMuted(val) {
+      try { localStorage.setItem(STORAGE_KEY, val ? '1' : '0'); } catch (_) {}
+    }
+
+    function tryAutoplay() {
+      if (userMuted) {
+        setUIState(false, true);
+        return;
+      }
+      const playPromise = audio.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(() => {
+          fadeVolumeTo(TARGET_VOLUME, 1400);
+          setUIState(true, false);
+        }).catch(() => {
+          // Przeglądarka zablokowała autoplay z dźwiękiem (typowa polityka mobile/Chrome/Safari) —
+          // czekamy na pierwszą interakcję użytkownika (klik/tap/scroll/klawisz) i wtedy startujemy.
+          setUIState(false, false);
+          const resume = () => {
+            if (userMuted) { cleanup(); return; }
+            audio.play().then(() => {
+              fadeVolumeTo(TARGET_VOLUME, 1400);
+              setUIState(true, false);
+            }).catch(() => {});
+            cleanup();
+          };
+          function cleanup() {
+            window.removeEventListener('pointerdown', resume);
+            window.removeEventListener('keydown', resume);
+            window.removeEventListener('scroll', resume);
+          }
+          window.addEventListener('pointerdown', resume, { once: true, passive: true });
+          window.addEventListener('keydown', resume, { once: true });
+          window.addEventListener('scroll', resume, { once: true, passive: true });
+        });
+      }
+    }
+
+    btn.addEventListener('click', () => {
+      if (audio.paused || userMuted) {
+        userMuted = false;
+        persistMuted(false);
+        audio.play().then(() => {
+          fadeVolumeTo(TARGET_VOLUME, 700);
+          setUIState(true, false);
+        }).catch(() => {});
+      } else {
+        userMuted = true;
+        persistMuted(true);
+        fadeVolumeTo(0, 500);
+        setTimeout(() => { if (userMuted) audio.pause(); }, 520);
+        setUIState(false, true);
+      }
+    });
+
+    // Wstrzymaj muzykę gdy karta w tle, wznów po powrocie (jeśli nie wyciszona ręcznie)
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        audio.pause();
+      } else if (!userMuted && audio.paused) {
+        audio.play().then(() => fadeVolumeTo(TARGET_VOLUME, 800)).catch(() => {});
+      }
+    });
+
+    tryAutoplay();
+  }
+
   /* ============== NAV SCROLL STATE ============== */
   function initNav() {
     const nav = document.querySelector('.imperial-nav');
@@ -518,6 +617,7 @@
     initPreloader();
     initCursor();
     initParticles();
+    initMusic();
     initNav();
     initReveal();
     initParallax();

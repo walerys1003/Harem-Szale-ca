@@ -865,3 +865,53 @@ nav.nav.nav--scrolled,
   .w { opacity: 1; transform: none; filter: none; }
   .scroll-progress { display: none; }
 }
+
+/* ============== MUSIC TOGGLE BUTTON ============== */
+.music-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9000;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(10, 8, 6, 0.72);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(.22,.61,.36,1), border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+.music-toggle:hover {
+  transform: scale(1.08);
+  border-color: rgba(212, 175, 55, 0.85);
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.25);
+}
+.music-toggle .music-icon {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  transition: opacity 0.25s ease;
+}
+.music-toggle .music-icon--off { opacity: 0; }
+.music-toggle.is-muted .music-icon--on { opacity: 0; }
+.music-toggle.is-muted .music-icon--off { opacity: 1; }
+.music-toggle.is-playing .music-icon--on {
+  animation: musicPulse 1.6s ease-in-out infinite;
+}
+@keyframes musicPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+@media (max-width: 900px) {
+  .music-toggle {
+    bottom: 16px !important;
+    right: 16px !important;
+    width: 46px !important;
+    height: 46px !important;
+  }
+  .music-toggle .music-icon { width: 19px; height: 19px; }
+}
