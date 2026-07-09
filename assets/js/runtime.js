@@ -425,14 +425,15 @@
     update();
   }
 
-  /* ============== DRAMATIS — NATYWNY HORIZONTAL SCROLL ==============
-     Sekcja "Cienie Pałacu" (10 kart) przewija się horyzontalnie NATYWNIE
-     (scroll-snap-type: x mandatory w CSS) — użytkownik przewija stronę
-     kółkiem myszy normalnie, w dół, bez żadnego przechwytywania.
-     Nawigacja pomiędzy kartami: drag myszką (desktop) lub swipe
-     poziomy (touch, natywny) bezpośrednio NA torze kart.
-     Wcześniejsza wersja przechwytywała window-level wheel/touchmove
-     co blokowało naturalny scroll strony — usunięte.
+  /* ============== DRAMATIS — HORIZONTAL SCROLL (Cienie Pałacu) ==============
+     Sekcja "Cienie Pałacu" (10 kart) — kółko myszy nad torem kart przesuwa
+     karty w bok (konwersja wheel deltaY → scrollLeft), 1:1, bez cooldownu.
+     Listener jest PODCZEPIONY NA .dramatis-track-wrap (nie na window), więc
+     działa dokładnie wtedy, gdy kursor jest nad sekcją — bez żadnego
+     "czy sekcja jest wycentrowana" viewport-checku. Na krawędziach (pierwsza/
+     ostatnia karta) puszczamy naturalny scroll strony (brak preventDefault),
+     więc można swobodnie wyjechać z sekcji w dół/górę.
+     Dodatkowo: drag myszką i swipe (touch, natywny) bezpośrednio na torze.
      ============================================================= */
   function initDramatis() {
     const wrap = document.querySelector('.dramatis-track-wrap');
@@ -460,6 +461,28 @@
       }
       wrap.addEventListener('scroll', updateProgress, { passive: true });
       updateProgress();
+
+      // WHEEL → HORIZONTAL SCROLL (scoped na .dramatis-track-wrap, NIE window).
+      // Aktywuje się precyzyjnie wtedy, gdy kursor jest nad torem kart — bez
+      // żadnego "czy sekcja jest wycentrowana" viewport-checku (fragile, dawał
+      // uczucie "trzeba przewinąć dwa razy"). Płynne mapowanie 1:1, zero
+      // cooldownu/throttle — każdy tik kółka/trackpada jest respektowany od
+      // razu. Na krawędziach (początek/koniec toru) NIE wołamy preventDefault,
+      // więc naturalny scroll strony przejmuje kontrolę i można wyjechać z
+      // sekcji dalej w dół / wrócić w górę bez żadnego "zawieszenia".
+      wrap.addEventListener('wheel', (e) => {
+        const delta = e.deltaY;
+        if (delta === 0) return;
+        const max = wrap.scrollWidth - wrap.clientWidth;
+        if (max <= 0) return; // brak overflow — nic do przewijania
+        const atStart = wrap.scrollLeft <= 0;
+        const atEnd = wrap.scrollLeft >= max - 1;
+        if ((atStart && delta < 0) || (atEnd && delta > 0)) {
+          return; // krawędź — puszczamy naturalny scroll strony
+        }
+        e.preventDefault();
+        wrap.scrollLeft += delta;
+      }, { passive: false });
 
       // DRAG myszką — działa tylko wewnątrz toru kart, NIE wpływa na scroll strony
       let isDown = false, startX = 0, scrollLeftStart = 0, dragMoved = false;

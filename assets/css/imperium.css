@@ -4104,7 +4104,11 @@ body.loaded .cinema-bar.bottom { transform: translateY(100%); }
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  /* scroll-behavior: auto (NIE smooth) — ustawianie scrollLeft z JS (wheel
+     handler poniżej) przy "smooth" kolejkuje/przerywa animacje przy każdym
+     ticku kółka myszy, co dawało uczucie "trzeba przewinąć dwa razy, żeby
+     ruszyło". Native scroll-snap-type nadal ładnie domyka do karty. */
+  scroll-behavior: auto;
   padding: 20px 0 40px;
   cursor: grab;
   /* Karta zmieści się w środkowej strefie viewportu — 70vh */
