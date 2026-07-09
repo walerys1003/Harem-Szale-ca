@@ -4103,11 +4103,18 @@ body.loaded .cinema-bar.bottom { transform: translateY(100%); }
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  /* scroll-behavior: auto (NIE smooth) — ustawianie scrollLeft z JS (wheel
-     handler poniżej) przy "smooth" kolejkuje/przerywa animacje przy każdym
-     ticku kółka myszy, co dawało uczucie "trzeba przewinąć dwa razy, żeby
-     ruszyło". Native scroll-snap-type nadal ładnie domyka do karty. */
+  /* scroll-snap-type CAŁKOWICIE WYŁĄCZONY (usunięte "x mandatory"/"x proximity").
+     POTWIERDZONE TESTAMI: przy włączonym scroll-snap-type (zarówno mandatory,
+     jak i proximity) przeglądarka BLOKUJE/odrzuca każde małe przesunięcie
+     scrollLeft (np. +100px, +200px, +300px) — element wraca do poprzedniej
+     wartości, dopóki żądane przesunięcie nie przekroczy dystansu do
+     następnego punktu snap. Właśnie to powodowało, że scroll na hover
+     (kółko myszy) w ogóle nie ruszał kart — każdy pojedynczy "tik" kółka
+     był zbyt mały i browser go ignorował. Wyśrodkowanie kart realizuje
+     teraz JS (initDramatis → centerActiveCard) programowo przez scrollTo(),
+     bez natywnego CSS snap, więc płynne przewijanie działa przy KAŻDYM
+     ruchu kółka/trackpada/dragu, a karty i tak dośrodkowują się po
+     zatrzymaniu scrolla. */
   scroll-behavior: auto;
   padding: 20px 0 40px;
   cursor: grab;
