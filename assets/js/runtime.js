@@ -412,18 +412,19 @@
     update();
   }
 
-  /* ============== DRAMATIS — SCROLL-LOCK PINNING ==============
-     Gdy sekcja dochodzi do środka viewportu — "przykleja się", a każdy
-     wheel/touchmove down przekłada się na horizontal scroll po postaciach.
-     Gdy dojedziemy do końca (right edge) — puszczamy scroll strony dalej.
+  /* ============== DRAMATIS — NATYWNY HORIZONTAL SCROLL ==============
+     Sekcja "Cienie Pałacu" (10 kart) przewija się horyzontalnie NATYWNIE
+     (scroll-snap-type: x mandatory w CSS) — użytkownik przewija stronę
+     kółkiem myszy normalnie, w dół, bez żadnego przechwytywania.
+     Nawigacja pomiędzy kartami: drag myszką (desktop) lub swipe
+     poziomy (touch, natywny) bezpośrednio NA torze kart.
+     Wcześniejsza wersja przechwytywała window-level wheel/touchmove
+     co blokowało naturalny scroll strony — usunięte.
      ============================================================= */
   function initDramatis() {
     const wrap = document.querySelector('.dramatis-track-wrap');
     if (!wrap) return;
-    // Early marker — potwierdza że funkcja wystartowała, nawet gdyby coś dalej zawiodło
     window.__dramatisInited = 'started';
-    const section = document.querySelector('#cienie') || wrap.closest('section');
-    if (!section) return;
     try {
       const fill = document.querySelector('#dramatisFill');
       const currentEl = document.querySelector('#dramatisCurrent');
@@ -433,123 +434,41 @@
       const cardCount = cards.length;
       if (totalEl && cardCount > 0) totalEl.textContent = String(cardCount);
 
-    // Progress bar + counter (na scroll wewnątrz wrap)
-    function updateProgress() {
-      const max = wrap.scrollWidth - wrap.clientWidth;
-      if (max <= 0) return;
-      const p = Math.min(1, Math.max(0, wrap.scrollLeft / max));
-      if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
-      if (currentEl && cardCount > 0) {
-        const idx = Math.min(cardCount, Math.max(1, Math.round(p * (cardCount - 1)) + 1));
-        currentEl.textContent = String(idx);
-      }
-    }
-    wrap.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-
-    // ==== SECTION-LEVEL SCROLL LOCK (v2 — hard release + escape-through) ====
-    function isSectionCentered() {
-      const r = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const center = r.top + r.height / 2;
-      // Aktywacja tylko gdy sekcja jest DOBRZE wycentrowana (35-65% viewportu)
-      return center > vh * 0.35 && center < vh * 0.65;
-    }
-    function horizMax() { return wrap.scrollWidth - wrap.clientWidth; }
-
-    function getSnapPositions() {
-      const positions = [];
-      for (const card of cards) {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        const wrapCenter = wrap.clientWidth / 2;
-        positions.push(cardCenter - wrapCenter);
-      }
-      return positions;
-    }
-    function currentCardIdx() {
-      const positions = getSnapPositions();
-      let bestIdx = 0, bestDist = Infinity;
-      for (let i = 0; i < positions.length; i++) {
-        const d = Math.abs(positions[i] - wrap.scrollLeft);
-        if (d < bestDist) { bestDist = d; bestIdx = i; }
-      }
-      return bestIdx;
-    }
-    function snapToCard(idx) {
-      const positions = getSnapPositions();
-      idx = Math.max(0, Math.min(positions.length - 1, idx));
-      wrap.scrollTo({ left: positions[idx], behavior: 'smooth' });
-    }
-
-    let wheelCooldown = false;
-    // Release cooldown — po dojściu do krawędzi nie łapiemy scrolla przez chwilę,
-    // żeby strona mogła płynnie wyjść z sekcji (w dół / w górę)
-    let releaseUntil = 0;
-
-    window.addEventListener('wheel', (e) => {
-      const now = Date.now();
-      // Release window — puszczamy naturalny scroll strony
-      if (now < releaseUntil) return;
-      if (!isSectionCentered()) return;
-      const delta = e.deltaY;
-      if (delta === 0) return;
-      const idx = currentCardIdx();
-      const isLast = idx === cardCount - 1;
-      const isFirst = idx === 0;
-
-      // KRAWĘDŹ: puszczamy scroll strony NATURALNIE + release cooldown
-      if ((isFirst && delta < 0) || (isLast && delta > 0)) {
-        releaseUntil = now + 700; // 700ms okno bez łapania
-        return; // nie preventDefault — niech strona scrolluje normalnie
-      }
-
-      e.preventDefault();
-      if (wheelCooldown) return;
-      wheelCooldown = true;
-      snapToCard(idx + (delta > 0 ? 1 : -1));
-      setTimeout(() => { wheelCooldown = false; }, 420);
-    }, { passive: false });
-
-    // TOUCH — dla mobile: pionowy swipe w sekcji przekłada się na horizontal
-    let touchStartY = 0, touchStartX = 0, touchStartScroll = 0;
-    window.addEventListener('touchstart', (e) => {
-      if (!isSectionCentered()) return;
-      touchStartY = e.touches[0].pageY;
-      touchStartX = e.touches[0].pageX;
-      touchStartScroll = wrap.scrollLeft;
-    }, { passive: true });
-    window.addEventListener('touchmove', (e) => {
-      if (!isSectionCentered()) return;
-      const dy = touchStartY - e.touches[0].pageY;
-      const dx = touchStartX - e.touches[0].pageX;
-      // Jeśli głównie pionowo — konwertuj
-      if (Math.abs(dy) > Math.abs(dx)) {
-        const max = horizMax();
-        const newScroll = touchStartScroll + dy * 1.5;
-        if (newScroll > 0 && newScroll < max) {
-          e.preventDefault();
-          wrap.scrollLeft = newScroll;
+      // Progress bar + counter — aktualizowane na natywny scroll wewnątrz wrap
+      function updateProgress() {
+        const max = wrap.scrollWidth - wrap.clientWidth;
+        if (max <= 0) return;
+        const p = Math.min(1, Math.max(0, wrap.scrollLeft / max));
+        if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+        if (currentEl && cardCount > 0) {
+          const idx = Math.min(cardCount, Math.max(1, Math.round(p * (cardCount - 1)) + 1));
+          currentEl.textContent = String(idx);
         }
       }
-    }, { passive: false });
+      wrap.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
 
-    // DRAG myszką (bonus — działa też bezpośrednio na kartach)
-    let isDown = false, startX = 0, scrollLeftStart = 0;
-    wrap.addEventListener('mousedown', (e) => {
-      isDown = true;
-      wrap.style.cursor = 'grabbing';
-      startX = e.pageX;
-      scrollLeftStart = wrap.scrollLeft;
-    });
-    document.addEventListener('mouseup', () => {
-      isDown = false;
-      if (wrap) wrap.style.cursor = 'grab';
-    });
-    document.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      wrap.scrollLeft = scrollLeftStart - (e.pageX - startX) * 1.4;
-    });
+      // DRAG myszką — działa tylko wewnątrz toru kart, NIE wpływa na scroll strony
+      let isDown = false, startX = 0, scrollLeftStart = 0, dragMoved = false;
+      wrap.addEventListener('mousedown', (e) => {
+        isDown = true;
+        dragMoved = false;
+        wrap.style.cursor = 'grabbing';
+        startX = e.pageX;
+        scrollLeftStart = wrap.scrollLeft;
+      });
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+        wrap.style.cursor = 'grab';
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const dx = e.pageX - startX;
+        if (Math.abs(dx) > 3) dragMoved = true;
+        if (!dragMoved) return;
+        e.preventDefault();
+        wrap.scrollLeft = scrollLeftStart - dx * 1.4;
+      });
 
       window.__dramatisInited = true;
     } catch (err) {
