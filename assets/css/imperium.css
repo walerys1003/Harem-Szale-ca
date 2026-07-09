@@ -320,6 +320,29 @@ button { font-family: inherit; cursor: pointer; background: none; border: none; 
   height: 100%;
   pointer-events: none;
   z-index: 0;
+  /* CSS fallback "jedwabnej mgły" — widoczny od razu, zanim (lub jeśli w ogóle)
+     WebGL shader się doładuje. Gdy shader wystartuje, JS dodaje klasę
+     .bg-canvas--gl, która wygasza ten gradient (canvas przejmuje rolę tła).
+     Brak WebGL / słabe GPU / błąd inicjalizacji → gradient zostaje na stałe. */
+  background: radial-gradient(ellipse 80% 60% at 50% 40%,
+      rgba(107, 29, 47, 0.35), transparent 60%),
+    linear-gradient(160deg, #050508 0%, #0a0a14 45%, #150d08 100%);
+  background-size: 200% 200%;
+  animation: silkFallback 22s ease-in-out infinite;
+  transition: opacity 1.2s ease;
+}
+.bg-canvas--gl { opacity: 0; }
+.bg-canvas[data-shader="gold"] {
+  background: radial-gradient(ellipse 80% 60% at 50% 40%,
+      rgba(212, 175, 55, 0.28), transparent 60%),
+    linear-gradient(160deg, #050508 0%, #150d08 45%, #6b1d2f 130%);
+}
+@keyframes silkFallback {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-canvas { animation: none; }
 }
 
 .particles {

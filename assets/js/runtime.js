@@ -156,18 +156,24 @@
   /* ============== JEDWABNA MGŁA — WebGL shader ============== */
   function initSilkShader(canvasEl, palette = 'noir') {
     if (!canvasEl) return;
-    const gl = canvasEl.getContext('webgl') || canvasEl.getContext('experimental-webgl');
-    if (!gl) return;
+    // failIfMajorPerformanceCaveat: true — przeglądarka ODMÓWI stworzenia
+    // kontekstu, jeśli dostępny jest tylko software rendering (SwiftShader/
+    // LLVMpipe, brak realnego GPU), zamiast wolno go tworzyć i renderować
+    // programowo (co realnie zamulało całą stronę na słabszych maszynach/
+    // VM/sesjach zdalnych). Zostaje wtedy tylko CSS fallback (patrz .bg-canvas
+    // w imperium.css) — wizualnie bardzo zbliżony, zero ryzyka zawieszenia.
+    const glOpts = { failIfMajorPerformanceCaveat: true };
+    const gl = canvasEl.getContext('webgl', glOpts) || canvasEl.getContext('experimental-webgl', glOpts);
+    if (!gl) return; // brak GPU lub tylko software — canvas zostaje przezroczysty
 
-    // Wykryj software rendering (SwiftShader/LLVMpipe — brak realnego GPU).
-    // Renderowanie ciężkiego fbm-noise shadera programowo potrafi zamulić
-    // całą kartę/urządzenie — w takim przypadku po prostu pomijamy shader.
+    // Dodatkowa asekuracja: część przeglądarek honoruje flagę tylko częściowo
+    // i wciąż zgłasza software renderer — w takim wypadku też się wycofujemy.
     try {
       const dbgInfo = gl.getExtension('WEBGL_debug_renderer_info');
       if (dbgInfo) {
         const renderer = gl.getParameter(dbgInfo.UNMASKED_RENDERER_WEBGL) || '';
         if (/swiftshader|llvmpipe|software/i.test(renderer)) {
-          return; // brak realnego GPU — canvas zostaje przezroczysty (tło CSS wystarczy)
+          return;
         }
       }
     } catch (e) { /* ignoruj — kontynuuj normalnie */ }
@@ -284,6 +290,7 @@
     let rafId = null;
     const FRAME_MS = 1000 / 30; // throttle do ~30fps — shader jest tłem, nie wymaga 60fps
     let lastFrame = 0;
+    let firstFrameDone = false;
 
     function frame(now) {
       rafId = requestAnimationFrame(frame);
@@ -293,6 +300,12 @@
       resize();
       gl.uniform1f(uT, (now - start) / 1000);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (!firstFrameDone) {
+        firstFrameDone = true;
+        // Shader realnie renderuje — teraz można bezpiecznie wygasić CSS
+        // fallback (gradient) pod spodem, canvas przejmuje rolę tła.
+        canvasEl.classList.add('bg-canvas--gl');
+      }
     }
     rafId = requestAnimationFrame(frame);
 
@@ -486,15 +499,23 @@
     initReveal();
     initParallax();
     initDramatis();
-    initLazyShaders();
+    // initLazyShaders() — WYŁĄCZONE CAŁKOWICIE.
+    // Zmierzony realny czas samego canvas.getContext('webgl', {...}) na
+    // maszynie bez sprzętowego GPU (VM / sesja zdalna / słabe sterowniki —
+    // dokładnie to zgłosił użytkownik): ~7-8 sekund, ZANIM jakikolwiek
+    // shader zaczął się renderować. To wywołanie jest synchroniczne i nie
+    // da się go "przetimeoutować" z JS ani ominąć flagą
+    // failIfMajorPerformanceCaveat (część przeglądarek/GPU stacków ją
+    // ignoruje). Efekt wizualny ("jedwabna mgła") jest subtelnym tłem
+    // (opacity 0.25-0.55) — nie jest wart ryzyka zawieszenia strony u
+    // nieznanego % odwiedzających. CSS fallback (.bg-canvas gradient w
+    // imperium.css) daje bardzo zbliżony nastrój i renderuje się od razu,
+    // bez żadnego ryzyka. Kod shadera zostaje w pliku (nieużywany) —
+    // można go bezpiecznie przywrócić w przyszłości pod jawnym opt-in
+    // (np. przełącznik w ustawieniach), ale NIE jako default-on.
   }
 
-  /* ============== LAZY SHADER INIT ==============
-     Kompilacja WebGL (5x jednocześnie) na starcie blokowała main thread
-     na wiele sekund, zwłaszcza bez sprzętowego GPU (software WebGL/
-     SwiftShader fallback). Zamiast inicjalizować wszystkie shadery od
-     razu, czekamy aż canvas faktycznie wejdzie w viewport (lub blisko
-     niego) i kompilujemy go dokładnie raz, w tym momencie. ============= */
+  /* ============== LAZY SHADER INIT (NIEUŻYWANE — patrz komentarz w boot()) === */
   function initLazyShaders() {
     const canvases = document.querySelectorAll('[data-shader]');
     if (!canvases.length) return;
