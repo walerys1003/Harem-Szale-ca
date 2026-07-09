@@ -19,10 +19,12 @@
   "private": true,
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260708.1",
+    "playwright": "^1.61.1",
     "serve": "^14.2.6",
     "typescript": "^7.0.2"
   },
   "dependencies": {
     "hono": "^4.12.28"
-  }
+  },
+  "main": "index.js"
 }

@@ -596,6 +596,15 @@ body.menu-open {
     grid-template-columns: 1fr !important;
     gap: 40px !important;
   }
+  .hero-grid > * {
+    min-width: 0 !important;
+  }
+  .hero-left--v4,
+  .hero-right--v4 {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
   .hero-divider { display: none; }
   .hero-title-l1-v4 { font-size: 56px !important; }
   .hero-title-l2-v4 { font-size: 72px !important; }
@@ -640,6 +649,23 @@ body.menu-open {
   .footer-v2-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 32px !important;
+  }
+
+  /* SAFETY NET: usuń domyślny min-width:auto na dzieciach grid/flex,
+     który powoduje overflow poza viewport na mobile w całej witrynie */
+  .hero-grid > *,
+  .manifest-grid > *,
+  .author-grid > *,
+  .tome-deep > *,
+  .persona-card > *,
+  .locations-grid > *,
+  .location > *,
+  .footer-v2-grid > *,
+  .tetra-covers-strip > * {
+    min-width: 0 !important;
+  }
+  img, svg, video, canvas {
+    max-width: 100% !important;
   }
 }
 
