@@ -14,6 +14,10 @@
 <link rel="stylesheet" href="assets/css/imperium.css?v=herotr17">
 <link rel="stylesheet" href="assets/css/cinematics.css?v=10">
 
+<!-- Preload głównego obrazu hero (LCP) — przeglądarka zaczyna go ściągać
+     równolegle z CSS/fontami, zamiast czekać aż parser dojdzie do <img> w body -->
+<link rel="preload" as="image" href="assets/img/hero_trio_v2-800w.webp" imagesrcset="assets/img/hero_trio_v2-500w.webp 500w, assets/img/hero_trio_v2-800w.webp 800w, assets/img/hero_trio_v2.webp 1200w" imagesizes="(max-width: 900px) 90vw, 45vw" fetchpriority="high">
+
 <!-- Favicon: ośmioramienna gwiazda -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050508'/%3E%3Cpath d='M16 4 L20 12 L28 16 L20 20 L16 28 L12 20 L4 16 L12 12 Z' stroke='%23D4AF37' stroke-width='1' fill='none'/%3E%3C/svg%3E">
 </head>
@@ -215,7 +219,7 @@
         <!-- GŁÓWNY ELEMENT: trio -->
         <div class="hero-trio">
           <div class="hero-trio-frame hero-trio-frame--v4" id="heroTrioFrame">
-            <img src="assets/img/hero_trio_v2.webp" alt="İbrahim I, Kösem Sultan, Şekerpare" class="hero-trio-img">
+            <img src="assets/img/hero_trio_v2-800w.webp" srcset="assets/img/hero_trio_v2-500w.webp 500w, assets/img/hero_trio_v2-800w.webp 800w, assets/img/hero_trio_v2.webp 1200w" sizes="(max-width: 900px) 90vw, 45vw" width="1200" height="896" alt="İbrahim I, Kösem Sultan, Şekerpare" class="hero-trio-img" fetchpriority="high" decoding="async">
             <div class="hero-trio-vignette hero-trio-vignette--v4"></div>
             <div class="hero-trio-inner-border"></div>
 
@@ -501,7 +505,7 @@
 
   <!-- Wide hero image -->
   <div class="manifest-wide-img">
-    <img src="assets/img/manifest_wide.webp" alt="Stambuł — Hagia Sophia i Błękitny Meczet o zmierzchu" loading="lazy">
+    <img src="assets/img/manifest_wide-900w.webp" srcset="assets/img/manifest_wide-600w.webp 600w, assets/img/manifest_wide-900w.webp 900w, assets/img/manifest_wide.webp 1200w" sizes="100vw" width="1200" height="509" alt="Stambuł — Hagia Sophia i Błękitny Meczet o zmierzchu" loading="lazy" decoding="async">
 
     <div class="manifest-wide-overlay manifest-wide-overlay--v5">
 
@@ -611,7 +615,7 @@
 
         <div class="author-v2-portrait-stack" data-reveal>
           <div class="author-v2-portrait-frame">
-            <img src="assets/img/author_new.webp" alt="Tomasz Kotliński" class="author-v2-portrait" loading="lazy">
+            <img src="assets/img/author_new-650w.webp" srcset="assets/img/author_new-400w.webp 400w, assets/img/author_new-650w.webp 650w, assets/img/author_new.webp 825w" sizes="(max-width: 900px) 60vw, 30vw" width="825" height="1024" alt="Tomasz Kotliński" class="author-v2-portrait" loading="lazy" decoding="async">
             <div class="author-v2-portrait-overlay"></div>
           </div>
           <!-- Sygnatura ornamentalna -->
@@ -729,7 +733,7 @@
       <div class="tetra-covers-strip">
         <a href="#tom-1" class="tetra-cover-item">
           <div class="tetra-cover-frame">
-            <img src="assets/img/covers/cover_kafes.webp" alt="Tom I — Kafes" loading="lazy">
+            <img src="assets/img/covers/cover_kafes-300w.webp" srcset="assets/img/covers/cover_kafes-300w.webp 300w, assets/img/covers/cover_kafes-500w.webp 500w, assets/img/covers/cover_kafes.webp 667w" sizes="(max-width: 700px) 45vw, 227px" width="667" height="1000" alt="Tom I — Kafes" loading="lazy" decoding="async">
           </div>
           <div class="tetra-cover-meta">
             <div class="tetra-cover-num">I</div>
@@ -739,7 +743,7 @@
         </a>
         <a href="#tom-2" class="tetra-cover-item">
           <div class="tetra-cover-frame">
-            <img src="assets/img/covers/cover_tron.webp" alt="Tom II — Tron" loading="lazy">
+            <img src="assets/img/covers/cover_tron-300w.webp" srcset="assets/img/covers/cover_tron-300w.webp 300w, assets/img/covers/cover_tron-500w.webp 500w, assets/img/covers/cover_tron.webp 667w" sizes="(max-width: 700px) 45vw, 227px" width="667" height="1000" alt="Tom II — Tron" loading="lazy" decoding="async">
           </div>
           <div class="tetra-cover-meta">
             <div class="tetra-cover-num">II</div>
@@ -749,7 +753,7 @@
         </a>
         <a href="#tom-3" class="tetra-cover-item">
           <div class="tetra-cover-frame">
-            <img src="assets/img/covers/cover_otchlan.webp" alt="Tom III — Otchłań" loading="lazy">
+            <img src="assets/img/covers/cover_otchlan-300w.webp" srcset="assets/img/covers/cover_otchlan-300w.webp 300w, assets/img/covers/cover_otchlan-500w.webp 500w, assets/img/covers/cover_otchlan.webp 667w" sizes="(max-width: 700px) 45vw, 227px" width="667" height="1000" alt="Tom III — Otchłań" loading="lazy" decoding="async">
           </div>
           <div class="tetra-cover-meta">
             <div class="tetra-cover-num">III</div>
@@ -759,7 +763,7 @@
         </a>
         <a href="#tom-4" class="tetra-cover-item">
           <div class="tetra-cover-frame">
-            <img src="assets/img/covers/cover_upadek.webp" alt="Tom IV — Upadek" loading="lazy">
+            <img src="assets/img/covers/cover_upadek-300w.webp" srcset="assets/img/covers/cover_upadek-300w.webp 300w, assets/img/covers/cover_upadek-500w.webp 500w, assets/img/covers/cover_upadek.webp 667w" sizes="(max-width: 700px) 45vw, 227px" width="667" height="1000" alt="Tom IV — Upadek" loading="lazy" decoding="async">
           </div>
           <div class="tetra-cover-meta">
             <div class="tetra-cover-num">IV</div>
@@ -787,7 +791,7 @@
         <div class="tome-deep-numeral">I</div>
         <div class="book-mockup">
           <div class="book-mockup-halo"></div>
-          <img src="assets/img/covers/cover_kafes.webp" alt="Tom I — Kafes · Złota Klatka" loading="lazy">
+          <img src="assets/img/covers/cover_kafes-500w.webp" srcset="assets/img/covers/cover_kafes-300w.webp 300w, assets/img/covers/cover_kafes-500w.webp 500w, assets/img/covers/cover_kafes.webp 667w" sizes="(max-width: 700px) 70vw, 460px" width="667" height="1000" alt="Tom I — Kafes · Złota Klatka" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -838,7 +842,7 @@
         <div class="tome-deep-numeral">II</div>
         <div class="book-mockup">
           <div class="book-mockup-halo"></div>
-          <img src="assets/img/covers/cover_tron.webp" alt="Tom II — Tron" loading="lazy">
+          <img src="assets/img/covers/cover_tron-500w.webp" srcset="assets/img/covers/cover_tron-300w.webp 300w, assets/img/covers/cover_tron-500w.webp 500w, assets/img/covers/cover_tron.webp 667w" sizes="(max-width: 700px) 70vw, 460px" width="667" height="1000" alt="Tom II — Tron" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -888,7 +892,7 @@
         <div class="tome-deep-numeral">III</div>
         <div class="book-mockup">
           <div class="book-mockup-halo"></div>
-          <img src="assets/img/covers/cover_otchlan.webp" alt="Tom III — Otchłań" loading="lazy">
+          <img src="assets/img/covers/cover_otchlan-500w.webp" srcset="assets/img/covers/cover_otchlan-300w.webp 300w, assets/img/covers/cover_otchlan-500w.webp 500w, assets/img/covers/cover_otchlan.webp 667w" sizes="(max-width: 700px) 70vw, 460px" width="667" height="1000" alt="Tom III — Otchłań" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -938,7 +942,7 @@
         <div class="tome-deep-numeral">IV</div>
         <div class="book-mockup">
           <div class="book-mockup-halo"></div>
-          <img src="assets/img/covers/cover_upadek.webp" alt="Tom IV — Upadek" loading="lazy">
+          <img src="assets/img/covers/cover_upadek-500w.webp" srcset="assets/img/covers/cover_upadek-300w.webp 300w, assets/img/covers/cover_upadek-500w.webp 500w, assets/img/covers/cover_upadek.webp 667w" sizes="(max-width: 700px) 70vw, 460px" width="667" height="1000" alt="Tom IV — Upadek" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -1013,7 +1017,7 @@
       <!-- IBRAHIM (large hero card) -->
       <article class="persona-card persona-hero">
         <div class="persona-portrait">
-          <img src="assets/img/characters/ibrahim.webp" alt="Sułtan İbrahim I" loading="lazy">
+          <img src="assets/img/characters/ibrahim-400w.webp" srcset="assets/img/characters/ibrahim-400w.webp 400w, assets/img/characters/ibrahim-700w.webp 700w, assets/img/characters/ibrahim.webp 1024w" sizes="(max-width: 700px) 90vw, 404px" width="1024" height="576" alt="Sułtan İbrahim I" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1046,7 +1050,7 @@
       <!-- KÖSEM -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/kosem.webp" alt="Kösem Sultan" loading="lazy">
+          <img src="assets/img/characters/kosem-400w.webp" srcset="assets/img/characters/kosem-400w.webp 400w, assets/img/characters/kosem-700w.webp 700w, assets/img/characters/kosem.webp 1024w" sizes="(max-width: 700px) 90vw, 359px" width="1024" height="576" alt="Kösem Sultan" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1076,7 +1080,7 @@
       <!-- ŞEKERPARĘ -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/sekerpare.webp" alt="Şekerparə Haseki" loading="lazy">
+          <img src="assets/img/characters/sekerpare-400w.webp" srcset="assets/img/characters/sekerpare-400w.webp 400w, assets/img/characters/sekerpare-700w.webp 700w, assets/img/characters/sekerpare.webp 1024w" sizes="(max-width: 700px) 90vw, 359px" width="1024" height="576" alt="Şekerparə Haseki" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1105,7 +1109,7 @@
       <!-- TURHAN -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/turhan.webp" alt="Turhan Hatice" loading="lazy">
+          <img src="assets/img/characters/turhan-400w.webp" srcset="assets/img/characters/turhan-400w.webp 400w, assets/img/characters/turhan-700w.webp 700w, assets/img/characters/turhan.webp 928w" sizes="(max-width: 700px) 90vw, 359px" width="928" height="1152" alt="Turhan Hatice" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1134,7 +1138,7 @@
       <!-- CINCI HOCA -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/cinci.webp" alt="Cinci Hoca" loading="lazy">
+          <img src="assets/img/characters/cinci-400w.webp" srcset="assets/img/characters/cinci-400w.webp 400w, assets/img/characters/cinci-700w.webp 700w, assets/img/characters/cinci.webp 1024w" sizes="(max-width: 700px) 90vw, 359px" width="1024" height="576" alt="Cinci Hoca" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1163,7 +1167,7 @@
       <!-- KARA MUSTAFA -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/kara_mustafa.webp" alt="Kara Mustafa Pasha" loading="lazy">
+          <img src="assets/img/characters/kara_mustafa-400w.webp" srcset="assets/img/characters/kara_mustafa-400w.webp 400w, assets/img/characters/kara_mustafa-700w.webp 700w, assets/img/characters/kara_mustafa.webp 1024w" sizes="(max-width: 700px) 90vw, 359px" width="1024" height="576" alt="Kara Mustafa Pasha" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1192,7 +1196,7 @@
       <!-- MURAD IV -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/murad_iv.webp" alt="Murad IV" loading="lazy">
+          <img src="assets/img/characters/murad_iv-400w.webp" srcset="assets/img/characters/murad_iv-400w.webp 400w, assets/img/characters/murad_iv-700w.webp 700w, assets/img/characters/murad_iv.webp 1024w" sizes="(max-width: 700px) 90vw, 359px" width="1024" height="576" alt="Murad IV" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1221,7 +1225,7 @@
       <!-- MEHMED IV -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/mehmed_iv.webp" alt="Mehmed IV jako dziecko" loading="lazy">
+          <img src="assets/img/characters/mehmed_iv-400w.webp" srcset="assets/img/characters/mehmed_iv-400w.webp 400w, assets/img/characters/mehmed_iv-700w.webp 700w, assets/img/characters/mehmed_iv.webp 896w" sizes="(max-width: 700px) 90vw, 359px" width="896" height="1200" alt="Mehmed IV jako dziecko" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1251,7 +1255,7 @@
       <!-- KIZLAR AGHA -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/kizlar_agha.webp" alt="Kızlar Agha" loading="lazy">
+          <img src="assets/img/characters/kizlar_agha-400w.webp" srcset="assets/img/characters/kizlar_agha-400w.webp 400w, assets/img/characters/kizlar_agha-700w.webp 700w, assets/img/characters/kizlar_agha.webp 896w" sizes="(max-width: 700px) 90vw, 359px" width="896" height="1200" alt="Kızlar Agha" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1281,7 +1285,7 @@
       <!-- ŞEYHÜLISLAM -->
       <article class="persona-card">
         <div class="persona-portrait">
-          <img src="assets/img/characters/mufti.webp" alt="Şeyhülislam" loading="lazy">
+          <img src="assets/img/characters/mufti-400w.webp" srcset="assets/img/characters/mufti-400w.webp 400w, assets/img/characters/mufti-700w.webp 700w, assets/img/characters/mufti.webp 896w" sizes="(max-width: 700px) 90vw, 359px" width="896" height="1200" alt="Şeyhülislam" loading="lazy" decoding="async">
           <div class="persona-portrait-frame"></div>
         </div>
         <div class="persona-body">
@@ -1347,7 +1351,7 @@
     <!-- 1. KAFES -->
     <article class="location" data-reveal>
       <div class="location-image-col">
-        <img src="assets/img/locations/kafes.webp" alt="Kafes — Złota cela książąt" class="location-image" loading="lazy">
+        <img src="assets/img/locations/kafes-500w.webp" srcset="assets/img/locations/kafes-500w.webp 500w, assets/img/locations/kafes-800w.webp 800w, assets/img/locations/kafes.webp 1200w" sizes="(max-width: 700px) 90vw, 738px" width="1200" height="670" alt="Kafes — Złota cela książąt" class="location-image" loading="lazy" decoding="async">
       </div>
       <div class="location-text-col">
         <div class="location-numeral">I</div>
@@ -1378,7 +1382,7 @@
     <!-- 2. SALA TRONOWA -->
     <article class="location reverse" data-reveal>
       <div class="location-image-col">
-        <img src="assets/img/locations/throne_room.webp" alt="Sala Tronowa Topkapı" class="location-image" loading="lazy">
+        <img src="assets/img/locations/throne_room-500w.webp" srcset="assets/img/locations/throne_room-500w.webp 500w, assets/img/locations/throne_room-800w.webp 800w, assets/img/locations/throne_room.webp 1200w" sizes="(max-width: 700px) 90vw, 738px" width="1200" height="670" alt="Sala Tronowa Topkapı" class="location-image" loading="lazy" decoding="async">
       </div>
       <div class="location-text-col">
         <div class="location-numeral">II</div>
@@ -1409,7 +1413,7 @@
     <!-- 3. HAREM -->
     <article class="location" data-reveal>
       <div class="location-image-col">
-        <img src="assets/img/locations/harem.webp" alt="Harem Topkapı" class="location-image" loading="lazy">
+        <img src="assets/img/locations/harem-500w.webp" srcset="assets/img/locations/harem-500w.webp 500w, assets/img/locations/harem-800w.webp 800w, assets/img/locations/harem.webp 1200w" sizes="(max-width: 700px) 90vw, 738px" width="1200" height="670" alt="Harem Topkapı" class="location-image" loading="lazy" decoding="async">
       </div>
       <div class="location-text-col">
         <div class="location-numeral">III</div>
@@ -1444,7 +1448,7 @@
     <!-- 4. BOSFOR -->
     <article class="location reverse" data-reveal>
       <div class="location-image-col">
-        <img src="assets/img/locations/bosphorus.webp" alt="Bosfor nocą" class="location-image" loading="lazy">
+        <img src="assets/img/locations/bosphorus-500w.webp" srcset="assets/img/locations/bosphorus-500w.webp 500w, assets/img/locations/bosphorus-800w.webp 800w, assets/img/locations/bosphorus.webp 1200w" sizes="(max-width: 700px) 90vw, 738px" width="1200" height="670" alt="Bosfor nocą" class="location-image" loading="lazy" decoding="async">
       </div>
       <div class="location-text-col">
         <div class="location-numeral">IV</div>
@@ -1535,7 +1539,7 @@
 
     <!-- Photo -->
     <div class="topo-v2-photo">
-      <img src="assets/img/topkapi_aerial.webp" alt="Topkapı Palace · widok z lotu ptaka" loading="lazy">
+      <img src="assets/img/topkapi_aerial-600w.webp" srcset="assets/img/topkapi_aerial-600w.webp 600w, assets/img/topkapi_aerial-900w.webp 900w, assets/img/topkapi_aerial.webp 1200w" sizes="100vw" width="1200" height="509" alt="Topkapı Palace · widok z lotu ptaka" loading="lazy" decoding="async">
       <div class="topo-v2-photo-vignette"></div>
 
       <!-- Compass (overlay top-right) -->

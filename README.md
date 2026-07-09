@@ -70,7 +70,7 @@ o Sułtanie İbrahimie I i upadku Imperium Osmańskiego (1640—1648).
 
 - **Typ**: Statyczna strona HTML/CSS/JS (vanilla, zero dependencies)
 - **Storage**: Brak (statyczne pliki)
-- **Assety**: 27 plików obrazów WebP (~2.2 MB, wcześniej ~28 MB w JPG/PNG) + 2 CSS + 2 JS
+- **Assety**: 26 zdjęć bazowych WebP + 44 responsywne warianty (`-XXXw.webp`) + 2 CSS + 2 JS
 
 ### ⚡ Optymalizacja wydajności (2026-07-09)
 Strona blokowała się na kilkanaście–20+ sekund przy pierwszym ładowaniu. Przyczyny i naprawa:
@@ -78,6 +78,41 @@ Strona blokowała się na kilkanaście–20+ sekund przy pierwszym ładowaniu. P
 2. **Lazy loading**: dodano `loading="lazy"` do wszystkich obrazów poza hero (above-the-fold)
 3. **5x WebGL shader compile na starcie → leniwa inicjalizacja**: kompilacja 5 shaderów fragmentowych ("jedwabna mgła") jednocześnie przy starcie blokowała main thread na wiele sekund (zwłaszcza bez sprzętowego GPU / software WebGL fallback). Teraz każdy shader kompiluje się dokładnie raz, dopiero gdy jego canvas wchodzi w viewport (IntersectionObserver, `initLazyShaders()` w `runtime.js`)
 4. Zweryfikowano realny czas ładowania przez Performance API: **domInteractive ≈ 525ms** (poprzednio dziesiątki sekund blokady)
+
+### 🖼️ Optymalizacja ładowania obrazów — pełny audyt i naprawa (2026-07-09)
+
+**Krytyczny audyt wykazał, że responsywna optymalizacja obrazów NIE była
+wcześniej wprowadzona** — istniała tylko konwersja do WebP i podstawowy
+`loading="lazy"`. Braki: 0/26 tagów `<img>` miało `width`/`height` (ryzyko
+layout shift), 0 miało `fetchpriority`, 0 miało `srcset`/`sizes` (mobile
+ściągał obrazy 1.2×–3.8× większe niż realnie wyświetlane), a plik
+`sultan_hero.webp` (64 KB) leżał w bundlu bez żadnego odwołania w kodzie.
+
+**Wprowadzone poprawki (wszystkie 26 tagów `<img>` na stronie):**
+1. **Usunięto martwy plik** `sultan_hero.webp` (64 KB, zero referencji)
+2. **Wygenerowano 44 responsywne warianty** (ImageMagick, quality 82) dla
+   hero, lokacji, portretów postaci, okładek, autora, `manifest_wide` i
+   `topkapi_aerial` — każdy plik źródłowy ma teraz 2 mniejsze warianty
+   (np. `ibrahim-400w.webp`, `ibrahim-700w.webp`) + oryginał jako
+   największy kandydat w `srcset`
+3. **`srcset` + `sizes`** na wszystkich 26 obrazach — przeglądarka sama
+   wybiera odpowiedni plik do realnej szerokości wyświetlania i DPR ekranu
+4. **`width`/`height`** na wszystkich 26 obrazach (oryginalne proporcje) —
+   eliminuje Cumulative Layout Shift, przeglądarka rezerwuje miejsce od razu
+5. **`decoding="async"`** na wszystkich 26 obrazach — dekodowanie nie
+   blokuje głównego wątku
+6. **`fetchpriority="high"`** na hero (LCP) + `<link rel="preload" as="image"
+   imagesrcset imagesizes fetchpriority="high">` w `<head>` — przeglądarka
+   zaczyna ściągać właściwy wariant hero równolegle z CSS/fontami
+7. Zweryfikowano Playwright'em (viewport 390px, DPR 2 vs 1440px desktop),
+   że `img.currentSrc` po naprawie wskazuje na mniejsze warianty
+   (np. `cover_kafes-500w.webp` na mobile zamiast pełnego `cover_kafes.webp`)
+   i że `oversizeRatio` (natural/needed) spadł z 1.17×–3.82× do ~0.3×–1.2×
+   w zależności od pozycji obrazu na osi czasu ładowania
+
+**Nie wdrożono (świadoma decyzja, niski priorytet):** format AVIF — WebP ma
+już ~97%+ wsparcia w przeglądarkach, dodatkowy zestaw plików nie uzasadniał
+kosztu utrzymania na tym etapie.
 
 ### Struktura assetów:
 ```
