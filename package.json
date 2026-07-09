@@ -16,6 +16,11 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "serve": "^14.2.6"
+    "@cloudflare/workers-types": "^5.20260708.1",
+    "serve": "^14.2.6",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "hono": "^4.12.28"
   }
 }
