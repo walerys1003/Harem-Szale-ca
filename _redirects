@@ -1,13 +1,11 @@
-# Cloudflare Pages redirects configuration
-# https://developers.cloudflare.com/pages/platform/redirects/
+# Cloudflare Workers redirects
+# NOTE: Only relative URLs allowed in Workers deployments
+# (absolute URL www→apex redirects handled at DNS/CF level)
 
-# www → apex (301 permanent)
-https://www.haremszalenca.pl/*  https://haremszalenca.pl/:splat  301
-
-# Stara sekcja zamowienia → tetralogia (usunięta sekcja)
+# Stara sekcja zamowienia → tetralogia
 /#zamow  /#tomy  301
 
-# Alias do 4 tomów (dla łatwiejszych URLów)
+# Alias do 4 tomów
 /tom-1  /#tom-1  302
 /tom-2  /#tom-2  302
 /tom-3  /#tom-3  302
