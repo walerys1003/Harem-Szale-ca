@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harem Szaleńca — Złota Klatka · Tomasz Kotliński</title>
+<meta name="description" content="Tetralogia o władzy, obsesji, samotności i cenie, jaką płaci się za koronę. Tomasz Kotliński. Wkrótce w księgarniach.">
+
+<!-- Preconnect & Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/imperium.css?v=herotr13">
+<link rel="stylesheet" href="assets/css/cinematics.css?v=9">
+
+<!-- Favicon: ośmioramienna gwiazda -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050508'/%3E%3Cpath d='M16 4 L20 12 L28 16 L20 20 L16 28 L12 20 L4 16 L12 12 Z' stroke='%23D4AF37' stroke-width='1' fill='none'/%3E%3C/svg%3E">
+</head>
+
+<body>
+
+<!-- ============================================================
+     SEKWENCJA 0 · PRZEDŚWIT — PRELOADER RYTUALNY
+============================================================ -->
+<div class="preloader" aria-hidden="true">
+  <svg class="preloader-star" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Rub el Hizb — ośmioramienna gwiazda (dwa nałożone kwadraty obrócone o 45°) -->
+    <path class="star-path" d="M60 8 L80 32 L112 32 L96 60 L112 88 L80 88 L60 112 L40 88 L8 88 L24 60 L8 32 L40 32 Z M28 28 L60 16 L92 28 L104 60 L92 92 L60 104 L28 92 L16 60 Z"
+          stroke="#C9A84C" stroke-width="0.8" stroke-linejoin="miter"/>
+  </svg>
+  <div class="preloader-text">Złota Klatka</div>
+</div>
+
+<!-- Cinematic bars (intro reveal) -->
+<div class="cinema-bars" aria-hidden="true">
+  <div class="cinema-bar top"></div>
+  <div class="cinema-bar bottom"></div>
+</div>
+
+<!-- Particles canvas (zostaje na całej stronie) -->
+<canvas class="particles" aria-hidden="true"></canvas>
+
+<!-- ============================================================
+     IMPERIAL NAV
+============================================================ -->
+<nav class="imperial-nav" aria-label="Główna nawigacja">
+  <a href="#hero" class="imperial-mark">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M16 4 L20 12 L28 16 L20 20 L16 28 L12 20 L4 16 L12 12 Z M28 16 L16 28 L4 16 L16 4 Z" stroke="#C9A84C" stroke-width="0.6"/>
+    </svg>
+    <span>Tomasz Kotliński</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#manifest">Manifest</a></li>
+    <li><a href="#autor">Autor</a></li>
+    <li><a href="#tomy">Tetralogia</a></li>
+    <li><a href="#cienie">Cienie</a></li>
+    <li><a href="#atlas">Atlas</a></li>
+    <li><a href="#tomy">Zamów</a></li>
+  </ul>
+  <!-- Hamburger button (mobile) -->
+  <button class="hamburger" id="hamburgerBtn" aria-label="Otwórz menu" aria-expanded="false" aria-controls="navLinks">
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+</nav>
+<!-- Mobile menu overlay -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-eyebrow">
+      <span class="mobile-menu-eyebrow-mark"></span>
+      <span class="mobile-menu-eyebrow-txt">Harem Szaleńca · Menu</span>
+      <span class="mobile-menu-eyebrow-mark"></span>
+    </div>
+    <ul class="mobile-menu-list">
+      <li><a href="#manifest" class="mobile-menu-link"><span class="mm-num">I</span><span class="mm-txt">Manifest</span></a></li>
+      <li><a href="#autor" class="mobile-menu-link"><span class="mm-num">II</span><span class="mm-txt">Autor</span></a></li>
+      <li><a href="#tomy" class="mobile-menu-link"><span class="mm-num">III</span><span class="mm-txt">Tetralogia</span></a></li>
+      <li><a href="#cienie" class="mobile-menu-link"><span class="mm-num">IV</span><span class="mm-txt">Cienie</span></a></li>
+      <li><a href="#atlas" class="mobile-menu-link"><span class="mm-num">V</span><span class="mm-txt">Atlas</span></a></li>
+      <li><a href="#zamow" class="mobile-menu-link mobile-menu-link--cta"><span class="mm-num">VI</span><span class="mm-txt">Zamów</span></a></li>
+    </ul>
+    <div class="mobile-menu-footer">
+      <span class="mobile-menu-arabic">هرم المجنون</span>
+      <span class="mobile-menu-year">MDCXL — MDCXLVIII</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SEKWENCJA 1 · NARODZINY — HERO KINETYCZNE
+============================================================ -->
+<section class="hero" id="hero">
+  <!-- Warstwa L4: Jedwabna mgła WebGL -->
+  <canvas class="bg-canvas" data-shader="noir" style="opacity: 0.55;"></canvas>
+
+  <!-- Warstwa L3: Mashrabiya overlay -->
+  <svg class="bg-canvas" style="z-index: 1; opacity: 0.04;" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="mashrabiya" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+        <!-- ośmiokątna krata -->
+        <path d="M40 4 L60 16 L60 40 L40 52 L20 40 L20 16 Z" stroke="#C9A84C" stroke-width="0.6" fill="none"/>
+        <circle cx="40" cy="28" r="3" stroke="#C9A84C" stroke-width="0.4" fill="none"/>
+        <path d="M0 28 L20 16 M60 16 L80 28 M0 52 L20 40 M60 40 L80 52" stroke="#C9A84C" stroke-width="0.4" fill="none"/>
+        <path d="M40 52 L40 80 M40 0 L40 4" stroke="#C9A84C" stroke-width="0.4" fill="none"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#mashrabiya)"/>
+  </svg>
+
+  <!-- Warstwa L1: Kaligrafia قفس (Kafes) jako znak wodny -->
+  <div class="watermark" style="font-size: 800px; right: -100px; top: 5%; transform: rotate(-12deg); opacity: 0.022;" aria-hidden="true">قفس</div>
+
+  <div class="shell" style="position: relative; z-index: 5; width: 100%;">
+    <div class="hero-grid">
+
+      <!-- LEWA STRONA V4: cinematic, z hookiem narracyjnym -->
+      <div class="hero-left hero-left--v4" data-reveal-stagger>
+
+        <!-- Wielka tuğra jako watermark w tle lewej -->
+        <div class="hero-left-tugra-bg" aria-hidden="true">
+          <svg viewBox="0 0 300 300" width="100%" height="100%">
+            <g fill="none" stroke="rgba(212,175,55,0.5)" stroke-width="1.4">
+              <path d="M30 200 Q60 60 120 140 T240 90 Q270 82 285 140"/>
+              <path d="M50 220 Q90 140 150 180 T270 155"/>
+              <circle cx="90" cy="105" r="5"/>
+              <circle cx="200" cy="82" r="5"/>
+              <circle cx="260" cy="145" r="5"/>
+              <path d="M70 235 L235 235" stroke-width="1"/>
+              <path d="M80 248 L220 248" stroke-width="0.8"/>
+              <path d="M95 260 L205 260" stroke-width="0.6"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="hero-presents hero-presents--v4">
+          <span class="hero-presents-line"></span>
+          <span>Tomasz Kotliński</span>
+        </div>
+
+        <h1 class="hero-h1-v4">
+          <span class="hero-title-l1-v4">Harem</span>
+          <span class="hero-title-l2-v4">Szaleńca</span>
+        </h1>
+
+        <div class="hero-arabic-v4">هرم المجنون</div>
+
+        <div class="hero-subtitle-v4">
+          <span class="hero-subtitle-dash"></span>
+          <span class="hero-subtitle-txt">Złota Klatka</span>
+          <span class="hero-subtitle-dash"></span>
+        </div>
+
+        <div class="hero-hook">
+          <p class="hero-hook-line">
+            Siedemnaście lat w klatce.<br>
+            Osiem lat na tronie.<br>
+            <em class="hero-hook-em">Jedno imperium — na krawędzi.</em>
+          </p>
+        </div>
+
+        <div class="hero-cta-row hero-cta-row--v4">
+          <a href="#tomy" class="btn-imperial">
+            <span>Poznaj sagę</span>
+            <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+              <path d="M0 5 L19 5 M14 1 L19 5 L14 9" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </a>
+          <a href="#manifest" class="btn-imperial-ghost">
+            <span>Manifest</span>
+          </a>
+        </div>
+
+        <div class="hero-signature">
+          <span class="hero-sig-num">IV</span>
+          <span class="hero-sig-txt">tomów · tetralogia</span>
+          <span class="hero-sig-year">MDCXL — MDCXLVIII</span>
+        </div>
+      </div>
+
+      <div class="hero-divider"></div>
+
+      <!-- PRAWA STRONA V4: trio z hierarchią -->
+      <div class="hero-right hero-right--v4">
+
+        <!-- Etykieta nad obrazem -->
+        <div class="hero-trio-eyebrow hero-trio-eyebrow--v4">
+          <span class="hero-trio-eyebrow-mark"></span>
+          <span class="hero-trio-eyebrow-num">I</span>
+          <span class="hero-trio-eyebrow-txt">Trzy Twarze Klatki</span>
+          <span class="hero-trio-eyebrow-num">·</span>
+          <span class="hero-trio-eyebrow-mark"></span>
+        </div>
+
+        <!-- GŁÓWNY ELEMENT: trio -->
+        <div class="hero-trio">
+          <div class="hero-trio-frame hero-trio-frame--v4" id="heroTrioFrame">
+            <img src="assets/img/hero_trio_v2.jpg" alt="İbrahim I, Kösem Sultan, Şekerpare" class="hero-trio-img">
+            <div class="hero-trio-vignette hero-trio-vignette--v4"></div>
+            <div class="hero-trio-inner-border"></div>
+
+            <!-- Narożniki iluminowane -->
+            <div class="hero-trio-corner hero-trio-corner--tl"></div>
+            <div class="hero-trio-corner hero-trio-corner--tr"></div>
+            <div class="hero-trio-corner hero-trio-corner--bl"></div>
+            <div class="hero-trio-corner hero-trio-corner--br"></div>
+
+            <!-- Sygnaturka w rogu obrazu -->
+            <div class="hero-trio-signet">
+              <div class="hero-trio-signet-year">1640</div>
+              <div class="hero-trio-signet-rule"></div>
+              <div class="hero-trio-signet-place">Topkapı Sarayı</div>
+            </div>
+          </div>
+
+          <!-- Podpisy postaci POD obrazem (nie na obrazie) -->
+          <div class="hero-trio-legend">
+            <div class="hero-trio-legend-item hero-trio-legend-item--main">
+              <div class="hero-trio-legend-dot"></div>
+              <div class="hero-trio-legend-name">İbrahim I</div>
+              <div class="hero-trio-legend-role">Sułtan · XIX Padyszach</div>
+            </div>
+            <div class="hero-trio-legend-item">
+              <div class="hero-trio-legend-dot"></div>
+              <div class="hero-trio-legend-name">Kösem Sultan</div>
+              <div class="hero-trio-legend-role">Valide · Matka</div>
+            </div>
+            <div class="hero-trio-legend-item">
+              <div class="hero-trio-legend-dot"></div>
+              <div class="hero-trio-legend-name">Şekerparə</div>
+              <div class="hero-trio-legend-role">Haseki · Ulubienica</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KARTOGRAM (przeniesiony jako drugorzędny akcent) -->
+        <div class="cartogram" style="display:none;">
+
+          <!-- Papier / pergamin z winietą -->
+          <div class="cartogram-paper"></div>
+          <div class="cartogram-noise"></div>
+
+          <!-- Ramka kartograficzna -->
+          <div class="cartogram-frame">
+            <div class="cartogram-corner cartogram-corner--tl"></div>
+            <div class="cartogram-corner cartogram-corner--tr"></div>
+            <div class="cartogram-corner cartogram-corner--bl"></div>
+            <div class="cartogram-corner cartogram-corner--br"></div>
+          </div>
+
+          <!-- Legenda kartuszowa (górny lewy) -->
+          <div class="cartogram-cartouche">
+            <div class="cartogram-cart-title">BOSPHORVS · MMXXVI</div>
+            <div class="cartogram-cart-arabic">مضيق البسفور</div>
+            <div class="cartogram-cart-coords">41°00′45″N · 28°58′48″E</div>
+          </div>
+
+          <!-- Róża wiatrów (górny prawy) -->
+          <svg class="cartogram-compass" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <circle cx="50" cy="50" r="46" stroke="#C9A84C" stroke-width="0.5" opacity="0.6"/>
+            <circle cx="50" cy="50" r="38" stroke="#C9A84C" stroke-width="0.3" opacity="0.4"/>
+            <g class="cartogram-compass-needle">
+              <path d="M50 8 L54 50 L50 92 L46 50 Z" fill="#D4AF37" opacity="0.9"/>
+              <path d="M8 50 L50 46 L92 50 L50 54 Z" fill="#C9A84C" opacity="0.5"/>
+            </g>
+            <text x="50" y="18" text-anchor="middle" fill="#D4AF37" font-family="serif" font-size="7" font-style="italic">N</text>
+            <text x="50" y="88" text-anchor="middle" fill="#C9A84C" font-family="serif" font-size="6" font-style="italic" opacity="0.7">S</text>
+            <text x="12" y="53" text-anchor="middle" fill="#C9A84C" font-family="serif" font-size="6" font-style="italic" opacity="0.7">W</text>
+            <text x="88" y="53" text-anchor="middle" fill="#C9A84C" font-family="serif" font-size="6" font-style="italic" opacity="0.7">E</text>
+          </svg>
+
+          <!-- Główna mapa SVG - stylizowana kartografia Stambułu / Bosforu -->
+          <svg class="cartogram-map" viewBox="0 0 600 800" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <!-- Bosfor - cieśnina -->
+            <path d="M 260,100 C 270,180 240,240 250,300 C 260,360 220,400 240,470 C 260,540 210,600 230,680 C 240,720 250,760 260,800"
+                  stroke="#C9A84C" stroke-width="1.2" fill="none" opacity="0.75" stroke-dasharray="0"/>
+            <path d="M 340,100 C 330,180 360,240 350,300 C 340,360 380,400 360,470 C 340,540 390,600 370,680 C 360,720 350,760 340,800"
+                  stroke="#C9A84C" stroke-width="1.2" fill="none" opacity="0.75"/>
+            <!-- Woda - hachury -->
+            <g opacity="0.15" stroke="#C9A84C" stroke-width="0.3" fill="none">
+              <line x1="270" y1="150" x2="330" y2="150"/>
+              <line x1="265" y1="200" x2="335" y2="200"/>
+              <line x1="270" y1="250" x2="340" y2="250"/>
+              <line x1="255" y1="300" x2="345" y2="300"/>
+              <line x1="250" y1="360" x2="355" y2="360"/>
+              <line x1="245" y1="420" x2="365" y2="420"/>
+              <line x1="245" y1="480" x2="360" y2="480"/>
+              <line x1="240" y1="540" x2="370" y2="540"/>
+              <line x1="235" y1="600" x2="375" y2="600"/>
+              <line x1="240" y1="660" x2="370" y2="660"/>
+              <line x1="250" y1="720" x2="360" y2="720"/>
+            </g>
+
+            <!-- Ląd zachodni (Europa) - kontur -->
+            <path d="M 0,100 L 260,100 C 270,180 240,240 250,300 C 260,360 220,400 240,470 C 260,540 210,600 230,680 C 240,720 250,760 260,800 L 0,800 Z"
+                  fill="rgba(201,168,76,0.03)" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+            <!-- Ląd wschodni (Azja) - kontur -->
+            <path d="M 340,100 L 600,100 L 600,800 L 340,800 C 350,760 360,720 370,680 C 390,600 340,540 360,470 C 380,400 340,360 350,300 C 360,240 330,180 340,100 Z"
+                  fill="rgba(201,168,76,0.03)" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+
+            <!-- Miejsca na mapie: Topkapı, Hagia Sophia, Harem, Kafes -->
+            <g class="cartogram-place cartogram-place--1">
+              <circle cx="180" cy="240" r="4" fill="#D4AF37"/>
+              <circle cx="180" cy="240" r="10" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.6"/>
+              <line x1="185" y1="238" x2="215" y2="228" stroke="#C9A84C" stroke-width="0.4"/>
+              <text x="220" y="230" fill="#F5F0EB" font-family="serif" font-size="11" font-style="italic">Topkapı Sarayı</text>
+              <text x="220" y="242" fill="#C9A84C" font-family="serif" font-size="7" opacity="0.7" letter-spacing="1">PALATIVM SVLTANI</text>
+            </g>
+            <g class="cartogram-place cartogram-place--2">
+              <circle cx="150" cy="330" r="4" fill="#D4AF37"/>
+              <circle cx="150" cy="330" r="10" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.6"/>
+              <line x1="155" y1="330" x2="195" y2="330" stroke="#C9A84C" stroke-width="0.4"/>
+              <text x="200" y="333" fill="#F5F0EB" font-family="serif" font-size="11" font-style="italic">Hagia Sophia</text>
+              <text x="200" y="345" fill="#C9A84C" font-family="serif" font-size="7" opacity="0.7" letter-spacing="1">SANCTA SAPIENTIA</text>
+            </g>
+            <g class="cartogram-place cartogram-place--3">
+              <circle cx="200" cy="430" r="4" fill="#D4AF37"/>
+              <circle cx="200" cy="430" r="10" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.6"/>
+              <line x1="205" y1="428" x2="235" y2="418" stroke="#C9A84C" stroke-width="0.4"/>
+              <text x="240" y="420" fill="#F5F0EB" font-family="serif" font-size="11" font-style="italic">Harem</text>
+              <text x="240" y="432" fill="#C9A84C" font-family="serif" font-size="7" opacity="0.7" letter-spacing="1">DOMVS FEMINARVM</text>
+            </g>
+            <g class="cartogram-place cartogram-place--4">
+              <circle cx="175" cy="530" r="5" fill="#D4AF37"/>
+              <circle cx="175" cy="530" r="12" stroke="#D4AF37" stroke-width="0.7" fill="none" opacity="0.8"/>
+              <circle cx="175" cy="530" r="18" stroke="#D4AF37" stroke-width="0.3" fill="none" opacity="0.4"/>
+              <line x1="180" y1="530" x2="220" y2="530" stroke="#D4AF37" stroke-width="0.5"/>
+              <text x="225" y="527" fill="#D4AF37" font-family="serif" font-size="13" font-style="italic" font-weight="600">Kafes</text>
+              <text x="225" y="540" fill="#C9A84C" font-family="serif" font-size="7" opacity="0.85" letter-spacing="1.5">CAVEA AVREA</text>
+            </g>
+
+            <!-- Statek na Bosforze -->
+            <g class="cartogram-ship" opacity="0.6">
+              <path d="M285,620 L315,620 L310,628 L290,628 Z" fill="#C9A84C"/>
+              <line x1="300" y1="620" x2="300" y2="600" stroke="#C9A84C" stroke-width="0.6"/>
+              <path d="M300 602 L308 615 L292 615 Z" fill="#C9A84C" opacity="0.7"/>
+            </g>
+          </svg>
+
+          <!-- Duża pieczęć tuğry (dół) -->
+          <div class="cartogram-seal">
+            <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+              <circle cx="60" cy="60" r="56" stroke="#6B1D2F" stroke-width="1.5" fill="rgba(107,29,47,0.85)"/>
+              <circle cx="60" cy="60" r="50" stroke="#C9A84C" stroke-width="0.4" fill="none" opacity="0.6"/>
+              <g transform="translate(60,60) scale(1.4)">
+                <path d="M-22 -6 Q-18 -22 -8 -18 Q0 -26 8 -20 Q22 -22 22 -12 M-16 -2 Q-8 2 0 0 M-18 3 Q-10 10 0 6 Q10 2 18 6 M-6 -8 Q0 -4 6 -8" stroke="#D4AF37" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+                <circle cx="18" cy="-12" r="1.4" fill="#D4AF37"/>
+                <path d="M-14 12 Q0 16 14 12" stroke="#D4AF37" stroke-width="0.6" fill="none"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Oś czasu — pasek 1640-1648 -->
+          <div class="cartogram-timeline">
+            <div class="cartogram-tl-track">
+              <span class="cartogram-tl-tick" style="left:0%"></span>
+              <span class="cartogram-tl-tick" style="left:12.5%"></span>
+              <span class="cartogram-tl-tick" style="left:25%"></span>
+              <span class="cartogram-tl-tick" style="left:37.5%"></span>
+              <span class="cartogram-tl-tick" style="left:50%"></span>
+              <span class="cartogram-tl-tick" style="left:62.5%"></span>
+              <span class="cartogram-tl-tick" style="left:75%"></span>
+              <span class="cartogram-tl-tick" style="left:87.5%"></span>
+              <span class="cartogram-tl-tick cartogram-tl-tick--end" style="left:100%"></span>
+              <span class="cartogram-tl-marker" title="1640 — objęcie tronu"></span>
+            </div>
+            <div class="cartogram-tl-labels">
+              <span>1640</span>
+              <span class="cartogram-tl-mid">— PANOWANIE İBRAHIMA I —</span>
+              <span>1648</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ORIGINAL mandala hidden (nie usuwam — może wrócić) -->
+      <div class="mandala-stage" style="display:none;">
+
+          <!-- WARSTWA 0: Mgła — animowany radial gradient -->
+          <div class="mandala-fog"></div>
+
+          <!-- WARSTWA 1: Kaligraficzny pierścień arabski -->
+          <svg class="mandala-calligraphy" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+            <defs>
+              <path id="mandala-arc" d="M 300,300 m -260,0 a 260,260 0 1,1 520,0 a 260,260 0 1,1 -520,0"/>
+            </defs>
+            <text font-family="'Amiri','Noto Naskh Arabic',serif" font-size="20" fill="#C9A84C" opacity="0.55" letter-spacing="6">
+              <textPath href="#mandala-arc" startOffset="0">
+                السلطان إبراهيم · قفس · عرش · هاويه · سقوط · هرم المجنون · القفص الذهبي
+              </textPath>
+            </text>
+          </svg>
+
+          <!-- WARSTWA 2: Trzy ośmiokąty (obracające się z różnymi prędkościami) -->
+          <svg class="mandala-octagons" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+            <!-- Zewnętrzny okrąg statyczny -->
+            <circle cx="300" cy="300" r="290" stroke="#C9A84C" stroke-width="0.3" opacity="0.4"/>
+            <circle cx="300" cy="300" r="282" stroke="#C9A84C" stroke-width="0.15" opacity="0.3"/>
+
+            <!-- Ośmiokąt zewnętrzny — 480px equiv -->
+            <g class="mandala-oct-outer">
+              <path d="M300 60 L470 130 L540 300 L470 470 L300 540 L130 470 L60 300 L130 130 Z"
+                    stroke="#C9A84C" stroke-width="0.5" fill="none" stroke-dasharray="2 6" opacity="0.7"/>
+            </g>
+
+            <!-- Ośmiokąt środkowy — 360px equiv (obrót odwrotny) -->
+            <g class="mandala-oct-mid">
+              <path d="M300 120 L427 173 L480 300 L427 427 L300 480 L173 427 L120 300 L173 173 Z"
+                    stroke="#D4AF37" stroke-width="0.4" fill="none" opacity="0.6"/>
+              <path d="M300 150 Q345 225 345 300 Q345 375 300 450 Q255 375 255 300 Q255 225 300 150 Z"
+                    stroke="#D4AF37" stroke-width="0.3" fill="none" opacity="0.35"/>
+            </g>
+
+            <!-- Ośmiokąt wewnętrzny — 240px equiv -->
+            <g class="mandala-oct-inner">
+              <path d="M300 180 L385 215 L420 300 L385 385 L300 420 L215 385 L180 300 L215 215 Z"
+                    stroke="#C9A84C" stroke-width="0.35" fill="none" opacity="0.5"/>
+              <path d="M180 300 Q240 270 300 270 Q360 270 420 300 Q360 330 300 330 Q240 330 180 300 Z"
+                    stroke="#D4AF37" stroke-width="0.25" fill="none" opacity="0.35"/>
+            </g>
+
+            <!-- Cztery tuğry w narożnikach (opacity 0.06) -->
+            <g opacity="0.09">
+              <g transform="translate(100,100) scale(0.55)">
+                <path d="M-30 -10 Q-25 -30 -10 -25 Q0 -35 10 -30 Q25 -32 30 -20 M-20 -5 Q-10 0 0 -2 M-25 0 Q-15 10 0 5 Q15 0 25 5" stroke="#D4AF37" stroke-width="0.6" fill="none"/>
+              </g>
+              <g transform="translate(500,100) scale(0.55) rotate(90)">
+                <path d="M-30 -10 Q-25 -30 -10 -25 Q0 -35 10 -30 Q25 -32 30 -20 M-20 -5 Q-10 0 0 -2 M-25 0 Q-15 10 0 5 Q15 0 25 5" stroke="#D4AF37" stroke-width="0.6" fill="none"/>
+              </g>
+              <g transform="translate(100,500) scale(0.55) rotate(-90)">
+                <path d="M-30 -10 Q-25 -30 -10 -25 Q0 -35 10 -30 Q25 -32 30 -20 M-20 -5 Q-10 0 0 -2 M-25 0 Q-15 10 0 5 Q15 0 25 5" stroke="#D4AF37" stroke-width="0.6" fill="none"/>
+              </g>
+              <g transform="translate(500,500) scale(0.55) rotate(180)">
+                <path d="M-30 -10 Q-25 -30 -10 -25 Q0 -35 10 -30 Q25 -32 30 -20 M-20 -5 Q-10 0 0 -2 M-25 0 Q-15 10 0 5 Q15 0 25 5" stroke="#D4AF37" stroke-width="0.6" fill="none"/>
+              </g>
+            </g>
+
+            <!-- Krzyż linii subtelny -->
+            <line x1="300" y1="30" x2="300" y2="570" stroke="#C9A84C" stroke-width="0.15" opacity="0.25"/>
+            <line x1="30" y1="300" x2="570" y2="300" stroke="#C9A84C" stroke-width="0.15" opacity="0.25"/>
+          </svg>
+
+          <!-- WARSTWA 4: Centralny punkt z pulsem -->
+          <div class="mandala-heart" aria-hidden="true">
+            <div class="mandala-heart-dot"></div>
+            <div class="mandala-heart-ring mandala-heart-ring--1"></div>
+            <div class="mandala-heart-ring mandala-heart-ring--2"></div>
+            <div class="mandala-heart-ring mandala-heart-ring--3"></div>
+            <div class="mandala-heart-ring mandala-heart-ring--4"></div>
+          </div>
+
+          <!-- Metryczka pod mandalą -->
+          <div class="mandala-caption">
+            <div class="mandala-caption-years">MDCXL — MDCXLVIII</div>
+            <div class="mandala-caption-sub">XIX Sułtan Imperium Osmańskiego</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    Gdzie historia spuszcza wzrok — tam zaczyna się literatura.
+  </div>
+
+  <div class="scroll-cue"></div>
+</section>
+
+<style>
+@keyframes rotateSlow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes rotateRev { from { transform: rotate(360deg); } to { transform: rotate(0); } }
+</style>
+
+<!-- ============================================================
+     SEKWENCJA 2 · MANIFEST — wide image + tekst głęboki
+============================================================ -->
+<section class="manifest-v2" id="manifest">
+
+  <!-- Wide hero image -->
+  <div class="manifest-wide-img">
+    <img src="assets/img/manifest_wide.jpg" alt="Stambuł — Hagia Sophia i Błękitny Meczet o zmierzchu">
+
+    <div class="manifest-wide-overlay manifest-wide-overlay--v5">
+
+      <!-- Numer aktu jako typograficzny drop-cap -->
+      <div class="mnfx-numeral" aria-hidden="true">I</div>
+
+      <div class="mnfx-body" data-reveal-stagger>
+
+        <div class="mnfx-eyebrow">
+          <span class="mnfx-eb-dash"></span>
+          <span class="mnfx-eb-txt">Manifest</span>
+        </div>
+
+        <blockquote class="mnfx-quote">
+          <p class="mnfx-stanza mnfx-stanza--a">
+            <span class="mnfx-l">Są imperia,</span>
+            <span class="mnfx-l">które podbijają świat</span>
+            <span class="mnfx-l mnfx-key mnfx-key--sword">mieczem.</span>
+          </p>
+
+          <span class="mnfx-caesura" aria-hidden="true"></span>
+
+          <p class="mnfx-stanza mnfx-stanza--b">
+            <span class="mnfx-l">A są takie,</span>
+            <span class="mnfx-l">które <em class="mnfx-key mnfx-key--rot">gniją</em></span>
+            <span class="mnfx-l mnfx-tail">od środka.</span>
+          </p>
+        </blockquote>
+
+        <div class="mnfx-attribution">
+          <span class="mnfx-attr-rule"></span>
+          <span class="mnfx-attr-txt">Harem Szaleńca <span class="mnfx-attr-sep">·</span> Prolog</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Deep text portion -->
+  <div class="manifest-deep">
+    <div class="watermark" style="font-size: 900px; left: -60px; bottom: -50px; opacity: 0.022;" aria-hidden="true">حرم</div>
+
+    <div class="shell">
+
+      <div class="manifest-rail" data-reveal>
+        <div class="manifest-rail-label">Wprowadzenie</div>
+      </div>
+
+      <div class="manifest-content" data-reveal-stagger>
+        <p class="manifest-lead">
+          W ciszy korytarzy, za zasłoną jedwabiu, w zapachu ambry,
+          potu, kadzidła i krwi — rodzi się historia, której Europa nie odważyła
+          się opowiedzieć przez czterysta lat.
+        </p>
+
+        <div class="manifest-body">
+          <p>
+            <em>Harem Szaleńca — Złota Klatka</em> nie jest powieścią historyczną
+            w klasycznym rozumieniu. To dzieło graniczne — pomiędzy literaturą wysoką
+            a dokumentem epoki, pomiędzy psychologicznym studium władzy a wielkim
+            freskiem upadku. Tomasz Kotliński prowadzi czytelnika tam, gdzie pamięć
+            sułtanatu osmańskiego pokryła się patyną milczenia.
+          </p>
+
+          <p>
+            W centrum stoi człowiek, którego koronowano, zanim nauczono żyć.
+            Ibrahim I — wydobyty z kafesu po siedemnastu latach zamknięcia,
+            wepchnięty na tron Imperium, na którym nie umiał ani stać, ani usiąść.
+            Wokół niego: matka-królowa Kösem, wielka strategka, która rządziła
+            sułtanami; ulubienica Şekerparə, ważąca więcej niż złoto; Cinci Hoca,
+            demonolog dworu; haremowy aparat, w którym intryga była walutą,
+            a śmierć — instrumentem polityki.
+          </p>
+
+          <p>
+            To opowieść o luksusie, który zżera. O władzy, która nie uszlachetnia,
+            lecz wyciąga z człowieka wszystko, co najbardziej niebezpieczne. O 280
+            konkubinach utopionych w Bosforze w jednej nocy. I o pytaniu, na które
+            każdy czytelnik musi sobie odpowiedzieć sam: <em>czy obłęd zaczyna się
+            w człowieku, czy w samej koronie?</em>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEKWENCJA 3 · AUTOR — zaawansowany layout
+============================================================ -->
+<section class="author-v2" id="autor">
+
+  <!-- Watermark والده -->
+  <div class="watermark" style="font-size: 1100px; right: -200px; top: -100px; opacity: 0.025;" aria-hidden="true">والده</div>
+
+  <!-- Gigantic typographic background -->
+  <div class="author-bg-letter" aria-hidden="true">T·K</div>
+
+  <div class="shell" style="position: relative; z-index: 5;">
+    <div class="author-v2-grid">
+
+      <!-- LEFT: Big eyebrow + portrait stack -->
+      <div class="author-v2-left">
+        <div class="t-eyebrow" style="padding-left: 0; margin-bottom: 32px;">II · Autor · Twórca uniwersum</div>
+
+        <div class="author-v2-portrait-stack" data-reveal>
+          <div class="author-v2-portrait-frame">
+            <img src="assets/img/author_new.jpg" alt="Tomasz Kotliński" class="author-v2-portrait">
+            <div class="author-v2-portrait-overlay"></div>
+          </div>
+          <!-- Sygnatura ornamentalna -->
+          <svg class="author-v2-signature" viewBox="0 0 240 60" fill="none">
+            <path d="M10 40 Q20 15 45 25 Q60 10 80 20 Q100 15 115 30 Q130 20 155 28 Q175 18 195 32 Q210 25 230 35"
+                  stroke="#C9A84C" stroke-width="0.8" fill="none"/>
+            <path d="M20 45 Q40 50 60 47 Q80 44 100 48 Q130 52 160 47 Q190 42 220 48"
+                  stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.6"/>
+            <text x="120" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="7" letter-spacing="3" fill="#5C5C6E">SIGN · 2026</text>
+          </svg>
+          <div class="author-v2-portrait-meta">
+            <div class="author-v2-name">Tomasz Kotliński</div>
+            <div class="author-v2-role">Autor · Pisarz</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Manifest + timeline -->
+      <div class="author-v2-right">
+
+        <!-- Pull quote w gigantycznym cudzysłowie -->
+        <div class="author-v2-pullquote" data-reveal>
+          <span class="author-v2-quotemark">"</span>
+          <blockquote class="author-v2-lead">
+            Tomasz Kotliński nie odkłada pióra.<br>
+            Każde słowo <em>wypala ślad</em>.
+          </blockquote>
+        </div>
+
+        <!-- Body text -->
+        <div class="author-v2-body" data-reveal-stagger>
+          <p>
+            Jego książki powstają z ran, które inni chcieliby zasypać — są jak <em>blizny
+            przypominające, że prawda wymaga bólu</em>. Proza Kotlińskiego to brudna szyba
+            świata: przejrzysta tam, gdzie trzeba zobaczyć, co boli, i mętna tam,
+            gdzie nie wolno zapominać, że winni bywają także ci, którzy tylko patrzą.
+          </p>
+          <p>
+            Każda historia to akt odwagi i ostrzeżenie, że czasem <em>najbardziej obcym
+            pozostajemy sami dla siebie</em>. <em>Harem Szaleńca</em> to opus jego twórczości —
+            siedem lat researchu, cztery tomy, jedna obsesja: zrozumieć, jak człowiek
+            może być zarówno panem świata, jak i ostatnim niewolnikiem własnego lęku.
+          </p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="author-v2-timeline" data-reveal-stagger>
+          <div class="author-v2-timeline-label">Linia twórcza</div>
+          <div class="author-v2-timeline-track">
+            <div class="author-v2-timeline-item">
+              <div class="author-v2-timeline-year">2019</div>
+              <div class="author-v2-timeline-event">Pierwsze archiwa osmańskie</div>
+            </div>
+            <div class="author-v2-timeline-item">
+              <div class="author-v2-timeline-year">2021</div>
+              <div class="author-v2-timeline-event">Stambuł · Topkapı · research terenowy</div>
+            </div>
+            <div class="author-v2-timeline-item">
+              <div class="author-v2-timeline-year">2023</div>
+              <div class="author-v2-timeline-event">Tom I — pierwsza wersja</div>
+            </div>
+            <div class="author-v2-timeline-item is-current">
+              <div class="author-v2-timeline-year">2026</div>
+              <div class="author-v2-timeline-event">Premiera tetralogii</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics row -->
+        <div class="author-v2-metrics" data-reveal-stagger>
+          <div class="author-v2-metric">
+            <div class="author-v2-metric-val">IV</div>
+            <div class="author-v2-metric-lbl">Tomów</div>
+          </div>
+          <div class="author-v2-metric">
+            <div class="author-v2-metric-val">7</div>
+            <div class="author-v2-metric-lbl">Lat researchu</div>
+          </div>
+          <div class="author-v2-metric">
+            <div class="author-v2-metric-val">2036</div>
+            <div class="author-v2-metric-lbl">Stron łącznie</div>
+          </div>
+          <div class="author-v2-metric">
+            <div class="author-v2-metric-val">1640<span style="font-size: 0.5em; color: var(--c-steel); margin: 0 4px;">—</span>1648</div>
+            <div class="author-v2-metric-lbl">Okres akcji</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEKWENCJA 4 · TETRALOGIA — INTRO przed tomami głębokimi
+============================================================ -->
+<section class="tetra-intro" id="tomy" aria-label="Tetralogia">
+  <div class="shell">
+    <div class="tetra-intro-grid tetra-intro-grid--v3" data-reveal-stagger>
+      <div class="t-eyebrow" style="padding-left: 0;">III · Cztery akty upadku</div>
+      <h2 class="tetra-intro-title">
+        <span class="t-gold-fill">Tetralogia</span>
+      </h2>
+
+      <!-- V3 · drabinowa struktura -->
+      <div class="tetra-lead-v3">
+        <div class="tetra-lead-line tetra-lead-line--a">Cztery tomy.</div>
+        <div class="tetra-lead-line tetra-lead-line--b">Cztery progi obłędu.</div>
+        <div class="tetra-lead-line tetra-lead-line--c">Jedna złota klatka —</div>
+        <div class="tetra-lead-line tetra-lead-line--d">która od początku była zapowiedzią klęski.</div>
+      </div>
+
+      <!-- 4 pełne okładki jako galeria -->
+      <div class="tetra-covers-strip">
+        <a href="#tom-1" class="tetra-cover-item">
+          <div class="tetra-cover-frame">
+            <img src="assets/img/covers/cover_kafes.png?v=5" alt="Tom I — Kafes" loading="lazy">
+          </div>
+          <div class="tetra-cover-meta">
+            <div class="tetra-cover-num">I</div>
+            <div class="tetra-cover-title">Kafes</div>
+            <div class="tetra-cover-sub">Złota Klatka</div>
+          </div>
+        </a>
+        <a href="#tom-2" class="tetra-cover-item">
+          <div class="tetra-cover-frame">
+            <img src="assets/img/covers/cover_tron.png?v=5" alt="Tom II — Tron" loading="lazy">
+          </div>
+          <div class="tetra-cover-meta">
+            <div class="tetra-cover-num">II</div>
+            <div class="tetra-cover-title">Tron</div>
+            <div class="tetra-cover-sub">Szaleństwo Władzy</div>
+          </div>
+        </a>
+        <a href="#tom-3" class="tetra-cover-item">
+          <div class="tetra-cover-frame">
+            <img src="assets/img/covers/cover_otchlan.png?v=5" alt="Tom III — Otchłań" loading="lazy">
+          </div>
+          <div class="tetra-cover-meta">
+            <div class="tetra-cover-num">III</div>
+            <div class="tetra-cover-title">Otchłań</div>
+            <div class="tetra-cover-sub">Upadek Rozumu</div>
+          </div>
+        </a>
+        <a href="#tom-4" class="tetra-cover-item">
+          <div class="tetra-cover-frame">
+            <img src="assets/img/covers/cover_upadek.png?v=5" alt="Tom IV — Upadek" loading="lazy">
+          </div>
+          <div class="tetra-cover-meta">
+            <div class="tetra-cover-num">IV</div>
+            <div class="tetra-cover-title">Upadek</div>
+            <div class="tetra-cover-sub">Karta Wyrwana</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEKWENCJA 5 · GŁĘBIA — LITERACKIE PORTRETY TOMÓW
+============================================================ -->
+<section class="tomes-deep" id="tomy-deep">
+
+  <!-- TOM I -->
+  <article class="tome-deep" id="tom-1">
+    <canvas class="bg-canvas" data-shader="noir" style="opacity: 0.35;"></canvas>
+    <div class="watermark" style="font-size: 700px; right: 0; top: 10%; opacity: 0.025;" aria-hidden="true">قفس</div>
+
+    <div class="tome-deep-left" data-reveal>
+      <div class="tome-deep-numeral-wrap">
+        <div class="tome-deep-numeral">I</div>
+        <div class="book-mockup">
+          <div class="book-mockup-halo"></div>
+          <img src="assets/img/covers/cover_kafes.png?v=5" alt="Tom I — Kafes · Złota Klatka">
+        </div>
+      </div>
+    </div>
+
+    <div class="tome-deep-right" data-reveal-stagger>
+      <div class="tome-deep-meta">Tom Pierwszy</div>
+      <h3 class="tome-deep-name t-gold-fill">Kafes</h3>
+
+      <div class="tome-deep-body">
+        <p>
+          W samym sercu imperium, za ścianami, które miały chronić dynastię,
+          dorasta chłopiec skazany na <em>ciszę, lęk i nieustanne oczekiwanie
+          na śmierć</em>. Kafes nie jest tylko więzieniem — jest kuźnią obłędu,
+          miejscem, w którym każdy szept brzmi jak wyrok, a każda noc może
+          okazać się ostatnią.
+        </p>
+        <p>
+          Gdy zamknięty książę zostaje nagle wezwany do tronu, nie wchodzi
+          w świat wolności, lecz w sam środek złotej pułapki, gdzie władza
+          pachnie piżmem, krwią i zdradą. To początek olśniewającej i mrocznej
+          opowieści o człowieku, którego koronowano, zanim nauczono żyć.
+        </p>
+      </div>
+
+      <div class="tome-deep-quote">
+        Wyjście z klatki nie oznaczało wolności.<br>
+        Oznaczało początek innej, większej klatki —<br>
+        z której nie ma już ucieczki.
+      </div>
+
+      <div class="tome-deep-cta-wrap">
+        <a href="https://ridero.eu/pl/books/kafes/" target="_blank" rel="noopener" class="tome-deep-cta">
+          <span class="tome-deep-cta-txt">Kup Teraz</span>
+          <span class="tome-deep-cta-sub">Kafes · Ridero</span>
+          <span class="tome-deep-cta-arrow"><svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true"><path d="M0 6 L21 6 M16 1 L21 6 L16 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- TOM II -->
+  <article class="tome-deep" id="tom-2" style="background: linear-gradient(180deg, var(--c-void) 0%, #110a05 100%);">
+    <canvas class="bg-canvas" data-shader="gold" style="opacity: 0.25;"></canvas>
+    <div class="watermark" style="font-size: 750px; left: -100px; top: 15%; opacity: 0.025;" aria-hidden="true">عرش</div>
+
+    <div class="tome-deep-left" data-reveal>
+      <div class="tome-deep-numeral-wrap">
+        <div class="tome-deep-numeral">II</div>
+        <div class="book-mockup">
+          <div class="book-mockup-halo"></div>
+          <img src="assets/img/covers/cover_tron.png?v=5" alt="Tom II — Tron">
+        </div>
+      </div>
+    </div>
+
+    <div class="tome-deep-right" data-reveal-stagger>
+      <div class="tome-deep-meta">Tom Drugi</div>
+      <h3 class="tome-deep-name t-gold-fill">Tron</h3>
+
+      <div class="tome-deep-body">
+        <p>
+          Sułtan zasiada na tronie, ale nie przynosi ze sobą ładu —
+          przynosi <em>głód, którego nie da się nasycić</em>. Harem,
+          pałac i całe państwo zaczynają drżeć pod ciężarem jego kaprysów,
+          namiętności i nagłych wyroków, bo tam, gdzie powinno rządzić prawo,
+          rządzi coraz bardziej rozchwiana wyobraźnia.
+        </p>
+        <p>
+          Złoto, jedwab, muzyka i rozkosz stają się tylko cienką zasłoną
+          dla narastającego szaleństwa, które zatruwa każdy korytarz pałacu.
+          <em>Tron</em> to powieść o władzy, która nie uszlachetnia,
+          lecz wydobywa z człowieka wszystko, co najbardziej niebezpieczne.
+        </p>
+      </div>
+
+      <div class="tome-deep-quote">
+        Tron był narzędziem wyniesienia.<br>
+        Stał się mechanizmem przyspieszającym obłęd.
+      </div>
+
+      <div class="tome-deep-cta-wrap">
+        <a href="https://ridero.eu/pl/books/tron_1/" target="_blank" rel="noopener" class="tome-deep-cta">
+          <span class="tome-deep-cta-txt">Kup Teraz</span>
+          <span class="tome-deep-cta-sub">Tron · Ridero</span>
+          <span class="tome-deep-cta-arrow"><svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true"><path d="M0 6 L21 6 M16 1 L21 6 L16 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- TOM III -->
+  <article class="tome-deep" id="tom-3" style="background: linear-gradient(180deg, #110a05 0%, var(--c-burgundy-deep) 100%);">
+    <canvas class="bg-canvas" data-shader="noir" style="opacity: 0.45;"></canvas>
+    <div class="watermark" style="font-size: 750px; right: -50px; bottom: 5%; opacity: 0.028;" aria-hidden="true">هاويه</div>
+
+    <div class="tome-deep-left" data-reveal>
+      <div class="tome-deep-numeral-wrap">
+        <div class="tome-deep-numeral">III</div>
+        <div class="book-mockup">
+          <div class="book-mockup-halo"></div>
+          <img src="assets/img/covers/cover_otchlan.png?v=5" alt="Tom III — Otchłań">
+        </div>
+      </div>
+    </div>
+
+    <div class="tome-deep-right" data-reveal-stagger>
+      <div class="tome-deep-meta">Tom Trzeci</div>
+      <h3 class="tome-deep-name t-gold-fill">Otchłań</h3>
+
+      <div class="tome-deep-body">
+        <p>
+          To już nie jest opowieść o rządzeniu, lecz o <em>powolnym zapadaniu się
+          świata</em>. Dwór żyje w cieniu urojeń, szeptów i podszeptów, a wokół
+          sułtana gromadzą się ci, którzy potrafią karmić jego lęki, bo wiedzą,
+          że strach jest najwierniejszym sługą tyranii.
+        </p>
+        <p>
+          Każda decyzja staje się bardziej gwałtowna, każdy rozkaz bardziej
+          niepojęty, a harem — dotąd miejsce pożądania i ceremonii — zamienia
+          się w <em>scenerię grozy, której nie da się już odwrócić</em>.
+          Otchłań jest jak noc nad Bosforem: ciężka, czarna i bez dna, kiedy
+          człowiek, pałac i całe imperium zaczynają tonąć razem.
+        </p>
+      </div>
+
+      <div class="tome-deep-quote">
+        Dwóch konkubin wystarczy, by zatonęło imperium.<br>
+        Tej nocy w Bosforze utopiono dwieście osiemdziesiąt.
+      </div>
+
+      <div class="tome-deep-cta-wrap">
+        <a href="https://ridero.eu/pl/books/otchlan_2/" target="_blank" rel="noopener" class="tome-deep-cta">
+          <span class="tome-deep-cta-txt">Kup Teraz</span>
+          <span class="tome-deep-cta-sub">Otchłań · Ridero</span>
+          <span class="tome-deep-cta-arrow"><svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true"><path d="M0 6 L21 6 M16 1 L21 6 L16 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- TOM IV -->
+  <article class="tome-deep" id="tom-4" style="background: linear-gradient(180deg, var(--c-burgundy-deep) 0%, var(--c-void) 100%);">
+    <canvas class="bg-canvas" data-shader="noir" style="opacity: 0.4;"></canvas>
+    <div class="watermark" style="font-size: 800px; left: -80px; top: 10%; opacity: 0.025;" aria-hidden="true">سقوط</div>
+
+    <div class="tome-deep-left" data-reveal>
+      <div class="tome-deep-numeral-wrap">
+        <div class="tome-deep-numeral">IV</div>
+        <div class="book-mockup">
+          <div class="book-mockup-halo"></div>
+          <img src="assets/img/covers/cover_upadek.png?v=5" alt="Tom IV — Upadek">
+        </div>
+      </div>
+    </div>
+
+    <div class="tome-deep-right" data-reveal-stagger>
+      <div class="tome-deep-meta">Tom Czwarty · Karta wyrwana</div>
+      <h3 class="tome-deep-name t-gold-fill">Upadek</h3>
+
+      <div class="tome-deep-body">
+        <p>
+          Po szaleństwie przychodzi chwila, w której nawet najwierniejsi
+          przestają wierzyć, że tron da się jeszcze ocalić. Pałac, który był
+          teatrem przepychu i przemocy, staje się <em>miejscem sądu, odwetu
+          i cichego rozrachunku</em> z władcą, który zamienił koronę w narzędzie
+          własnej zguby.
+        </p>
+        <p>
+          Ale wraz z jego upadkiem nie kończy się historia — dopiero wtedy
+          zaczyna się walka o pamięć: kto opowie ją światu, kto zmyje zbrodnię,
+          a kto uczyni z niej legendę. <em>Upadek</em> to wielki finał tetralogii
+          o człowieku pożartym przez władzę i o imperium, które zbyt późno
+          zrozumiało, że złota klatka pozostaje klatką, nawet jeśli lśni jak tron.
+        </p>
+      </div>
+
+      <div class="tome-deep-quote">
+        Karta zostaje wyrwana z księgi.<br>
+        Ale popiół po niej — pamięta wszystko.
+      </div>
+
+      <div class="tome-deep-cta-wrap">
+        <a href="https://ridero.eu/pl/books/upadek/" target="_blank" rel="noopener" class="tome-deep-cta">
+          <span class="tome-deep-cta-txt">Kup Teraz</span>
+          <span class="tome-deep-cta-sub">Upadek · Ridero</span>
+          <span class="tome-deep-cta-arrow"><svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true"><path d="M0 6 L21 6 M16 1 L21 6 L16 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ============================================================
+     SEKWENCJA 6 · CIENIE PAŁACU — DRAMATIS PERSONAE
+============================================================ -->
+<section class="dramatis" id="cienie">
+
+  <div class="watermark" style="font-size: 1200px; right: -100px; top: 6%; opacity: 0.03;" aria-hidden="true">حرم</div>
+
+  <div class="shell" style="position: relative; z-index: 5;">
+    <div class="dramatis-head" data-reveal-stagger>
+      <div class="t-eyebrow">IV · Cienie Pałacu</div>
+      <h2 class="t-h1">
+        Dramatis personae<br>
+        <em style="color: var(--c-gold); font-style: italic;">ci, którzy pamiętają</em>.
+      </h2>
+      <p class="t-lead" style="max-width: 720px;">
+        Dziesięć twarzy imperium. Każda z nich nosi w sobie inną prawdę —
+        i inną cenę, jaką trzeba było zapłacić, by stać blisko tronu.
+      </p>
+      <div class="dramatis-instruct">
+        <span class="t-mono" style="color: var(--c-gold);">Przesuń w bok →</span>
+        <span class="t-mono" style="color: var(--c-steel);">10 postaci · 4 frakcje</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Horizontal scroll z dużymi kartami -->
+  <div class="dramatis-track-wrap">
+    <div class="dramatis-track" id="dramatisTrack">
+
+      <!-- IBRAHIM (large hero card) -->
+      <article class="persona-card persona-hero">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/ibrahim.jpg" alt="Sułtan İbrahim I">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-imperial">Padyszach · Imperium</div>
+          <div class="persona-meta">İbrahim Han</div>
+          <h3 class="persona-name">
+            Sułtan<br>İbrahim I
+            <span class="persona-arabic">إبراهيم</span>
+          </h3>
+          <p class="persona-quote">
+            „Wydobyty z kafesu po siedemnastu latach. Zasiadł na tronie człowiek
+            <em>już rozbity</em> — i nikt nie zauważył, że korona nie ratuje,
+            lecz wykańcza."
+          </p>
+          <p class="persona-bio">
+            XIX sułtan Imperium Osmańskiego. Syn Ahmeda I i Kösem Sultan.
+            Wychowany w cieniu śmierci — każde stuknięcie do drzwi mogło
+            oznaczać tron albo jedwabny sznur. Gdy w 1640 roku, po nagłej śmierci
+            brata Murada IV, wyniesiono go z kafesu, miał dwadzieścia pięć lat
+            i umysł, którego nikt nie nauczył oddychać.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Panował</span><span class="val">1640—1648</span></div>
+            <div><span class="lbl">W kafesie</span><span class="val">17 lat</span></div>
+            <div><span class="lbl">Synów</span><span class="val">3</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- KÖSEM -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/kosem.jpg" alt="Kösem Sultan">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-harem">Harem · Władza</div>
+          <div class="persona-meta">Mahpeyker · Kösem</div>
+          <h3 class="persona-name">
+            Kösem<br>Sultan
+            <span class="persona-arabic">والده</span>
+          </h3>
+          <p class="persona-quote">
+            „Rządziła sułtanami przez czterdzieści lat.<br>
+            Wiedziała, że <em>obłęd syna</em> trzeba osłonić — albo wykorzystać."
+          </p>
+          <p class="persona-bio">
+            Najdłużej rządząca Valide Sultan w historii imperium. Strategka
+            o lodowatej precyzji, która przeżyła trzech sułtanów. Jej imię oznaczało
+            „przewodniczka stada". Gdy Ibrahim oszalał, to ona pisała w jego imieniu fermany.
+            Zamordowana w 1651 — uduszona zasłoną własnego haremu.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Lat na dworze</span><span class="val">48</span></div>
+            <div><span class="lbl">Sułtanów</span><span class="val">3</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ŞEKERPARĘ -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/sekerpare.jpg" alt="Şekerparə Haseki">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-harem">Harem · Pożądanie</div>
+          <div class="persona-meta">Haseki</div>
+          <h3 class="persona-name">
+            Şekerparə
+            <span class="persona-arabic">شكر پاره</span>
+          </h3>
+          <p class="persona-quote">
+            „Cukrowy kawałek. Konkubina, która ważyła <em>więcej niż złoto
+            i więcej niż państwo</em>. Jej ciało było traktatem."
+          </p>
+          <p class="persona-bio">
+            Ulubienica Ibrahima. Otrzymywała w darze całe wsie i prowincje —
+            sułtan kazał ważyć ją na wadze i tyle samo złota oddawać jej każdego tygodnia.
+            Jej intrygi sięgały serca polityki. Po detronizacji sułtana
+            wygnana do Bursy, gdzie zniknęła z kart historii.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Wagę w złocie</span><span class="val">otrzymywała tygodniowo</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- TURHAN -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/turhan.jpg?v=2" alt="Turhan Hatice">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-harem">Harem · Strategia</div>
+          <div class="persona-meta">Hatice Turhan</div>
+          <h3 class="persona-name">
+            Turhan<br>Hatice
+            <span class="persona-arabic">ترخان</span>
+          </h3>
+          <p class="persona-quote">
+            „Cicha. Wytrwała.<br>
+            Czekała, aż klatka <em>pęknie sama</em>."
+          </p>
+          <p class="persona-bio">
+            Ukraińska niewolnica wzięta jako dziecko, matka przyszłego Mehmeda IV.
+            Przez lata wojowała z Kösem o wpływ na małego sułtana. Jej cierpliwość
+            była ostrzem — to ona ostatecznie zwyciężyła w wielkiej grze haremu,
+            zostając Valide Sultan po śmierci teściowej.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Rządziła jako Valide</span><span class="val">1651—1683</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CINCI HOCA -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/cinci.jpg" alt="Cinci Hoca">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-shadow">Cień · Magia</div>
+          <div class="persona-meta">Hüseyin Efendi</div>
+          <h3 class="persona-name">
+            Cinci<br>Hoca
+            <span class="persona-arabic">جنجي</span>
+          </h3>
+          <p class="persona-quote">
+            „Karmił lęki sułtana eliksirami i amuletami.<br>
+            <em>Strach</em> był walutą imperium."
+          </p>
+          <p class="persona-bio">
+            Egzorcysta-szarlatan, który zdobył nad Ibrahimem władzę absolutną
+            przez tajemne mikstury i amulety. Doradzał w sprawach państwa,
+            rzucał uroki na ministrów. Gdy sułtan upadł — Cinci stracił głowę
+            w ciągu dwóch dni. Imię „Cinci" znaczy „od dżinów".
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Lata wpływów</span><span class="val">1644—1648</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- KARA MUSTAFA -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/kara_mustafa.jpg" alt="Kara Mustafa Pasha">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-imperial">Divan · Rozum</div>
+          <div class="persona-meta">Kara Mustafa Paşa</div>
+          <h3 class="persona-name">
+            Kara<br>Mustafa
+            <span class="persona-arabic">قرا مصطفى</span>
+          </h3>
+          <p class="persona-quote">
+            „Ostatni głos rozsądku w pałacu,<br>
+            który <em>już nie słuchał</em>."
+          </p>
+          <p class="persona-bio">
+            Wielki Wezyr, ostatni ze starej szkoły. Próbował temperować
+            ekscesy sułtana, prowadzić politykę zagraniczną mimo wewnętrznego chaosu.
+            Stracony na rozkaz Ibrahima w 1644 — za to, że próbował odebrać Şekerparə
+            część jej majątków. Symbol upadku rozumu państwowego.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Wezyrat</span><span class="val">1644</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- MURAD IV -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/murad_iv.jpg" alt="Murad IV">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-imperial">Padyszach · Krew</div>
+          <div class="persona-meta">Murad Han</div>
+          <h3 class="persona-name">
+            Sułtan<br>Murad IV
+            <span class="persona-arabic">مراد</span>
+          </h3>
+          <p class="persona-quote">
+            „Krwawy Murad". Z jego śmierci<br>
+            na tron wstąpił <em>obłęd Ibrahima</em>."
+          </p>
+          <p class="persona-bio">
+            Starszy brat Ibrahima. Sułtan-żołnierz, który odzyskał Bagdad,
+            zakazał tytoniu pod karą śmierci i zabił własną ręką dwudziestu pięciu mężczyzn.
+            Zmarł w 1640 z marskości wątroby, nie zostawiając następcy.
+            To on przez lata trzymał Ibrahima w kafesie — i to jego śmierć go uwolniła.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Panował</span><span class="val">1623—1640</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- MEHMED IV -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/mehmed_iv.jpg" alt="Mehmed IV jako dziecko">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-imperial">Padyszach · Dziecko</div>
+          <div class="persona-meta">Mehmed Han · Avcı</div>
+          <h3 class="persona-name">
+            Mehmed IV<br>Łowca
+            <span class="persona-arabic">محمد</span>
+          </h3>
+          <p class="persona-quote">
+            „Koronowany w wieku <em>sześciu lat</em>.<br>
+            Sułtanat dzieciństwa, regencja matek."
+          </p>
+          <p class="persona-bio">
+            Syn Ibrahima i Turhan Hatice. Gdy ojca strącono z tronu i uduszono,
+            mały Mehmed został wyniesiony na sułtana. Przez pierwsze siedem lat
+            jego panowania toczyła się brutalna wojna kobiet o regencję — Kösem przeciw Turhan.
+            Wygrała matka. Mehmed nazwany został „Łowcą" — bo w wieku dorosłym
+            jedyne co go interesowało, to polowania.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Wstąpił na tron</span><span class="val">w wieku 6 lat</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- KIZLAR AGHA -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/kizlar_agha.jpg" alt="Kızlar Agha">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-shadow">Cień · Klucze</div>
+          <div class="persona-meta">Sünbül Agha</div>
+          <h3 class="persona-name">
+            Kızlar<br>Ağası
+            <span class="persona-arabic">آغا</span>
+          </h3>
+          <p class="persona-quote">
+            „Czarny eunuch, strażnik dziewcząt.<br>
+            <em>Trzymał w ręku klucze do imperium</em>, choć sam nie miał ciała."
+          </p>
+          <p class="persona-bio">
+            Najpotężniejszy człowiek w pałacu po sułtanie. Naczelnik haremu,
+            jedyny mężczyzna mogący wejść do jego komnat. Czarny niewolnik z Afryki,
+            wykastrowany jako chłopiec, awansowany przez czterdzieści lat służby
+            do roli, w której decydował o losie matek przyszłych sułtanów.
+            Władał skarbcem fundacji religijnych — drugim największym budżetem imperium.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Pozycja</span><span class="val">III po sułtanie</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ŞEYHÜLISLAM -->
+      <article class="persona-card">
+        <div class="persona-portrait">
+          <img src="assets/img/characters/mufti.jpg" alt="Şeyhülislam">
+          <div class="persona-portrait-frame"></div>
+        </div>
+        <div class="persona-body">
+          <div class="persona-tag persona-tag-shadow">Cień · Wiara</div>
+          <div class="persona-meta">Şeyhülislam · Wielki Mufti</div>
+          <h3 class="persona-name">
+            Wielki<br>Mufti
+            <span class="persona-arabic">شيخ</span>
+          </h3>
+          <p class="persona-quote">
+            „Mógł odmówić sułtanowi <em>jedną fetwą</em>.<br>
+            I jedną fetwą — zdjąć go z tronu."
+          </p>
+          <p class="persona-bio">
+            Najwyższy autorytet religijny imperium. Jego fetwy miały moc prawa
+            równą fermanowi sułtana. To Şeyhülislam Abdürrahim Efendi w sierpniu 1648
+            wydał fetwę legitymizującą detronizację Ibrahima. Bez jego pieczęci
+            janczarzy nigdy nie odważyliby się unieść broni przeciw padyszachowi.
+            Pisał wyrok, którego potem nie mógł cofnąć.
+          </p>
+          <div class="persona-stats">
+            <div><span class="lbl">Fetwa detronizacyjna</span><span class="val">VIII · 1648</span></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Progress + hint (bez strzałek — teraz działa naturalny scroll strony) -->
+  <div class="dramatis-nav dramatis-nav--v3">
+    <div class="dramatis-nav-inner">
+      <div class="dramatis-hint-v3">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="opacity:0.7">
+          <path d="M10 3 L10 17 M5 12 L10 17 L15 12" stroke="#D4AF37" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="dramatis-hint-txt">Scrolluj w dół — postacie przesuwają się w bok</span>
+      </div>
+      <div class="dramatis-progress">
+        <div class="dramatis-progress-bar"><div class="dramatis-progress-fill" id="dramatisFill"></div></div>
+      </div>
+      <div class="dramatis-counter"><span id="dramatisCurrent">1</span> <span class="dramatis-slash">/</span> <span id="dramatisTotal">10</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEKWENCJA 6.5 · LOKACJE — ŚWIAT POWIEŚCI
+============================================================ -->
+<section class="locations" id="lokacje">
+
+  <div class="locations-head" data-reveal-stagger>
+    <div class="t-eyebrow" style="padding-left: 0;">V · Świat powieści</div>
+    <h2 class="t-h1" style="text-align: center;">Cztery miejsca,<br>w których historia <em style="font-style: italic; color: var(--c-gold);">milczy</em>.</h2>
+    <p class="t-lead" style="max-width: 640px;">
+      Stąpamy po kamieniach, które pamiętają więcej,<br>
+      niż napisano w kronikach.
+    </p>
+  </div>
+
+  <div class="locations-grid">
+
+    <!-- 1. KAFES -->
+    <article class="location" data-reveal>
+      <div class="location-image-col">
+        <img src="assets/img/locations/kafes.jpg" alt="Kafes — Złota cela książąt" class="location-image">
+      </div>
+      <div class="location-text-col">
+        <div class="location-numeral">I</div>
+        <div class="location-meta">Lokacja Pierwsza</div>
+        <h3 class="location-name">
+          Kafes
+          <span class="location-name-sub">قفس · Złota cela</span>
+        </h3>
+        <p class="location-desc">
+          Mała komnata w głębi haremu, gdzie książęta krwi czekali — czasem
+          dwa lata, czasem dwadzieścia. Ściany pokryte ceramiką z Izniku,
+          okna zakratowane, dni odmierzane biciem dzwonu. <em>Tu nie zabijano
+          ciała. Tu zabijano umysł, powoli, z miłością.</em>
+        </p>
+        <div class="location-stat">
+          <div class="location-stat-item">
+            <div class="location-stat-value">17</div>
+            <div class="location-stat-label">Lat Ibrahima</div>
+          </div>
+          <div class="location-stat-item">
+            <div class="location-stat-value">14m²</div>
+            <div class="location-stat-label">Powierzchni</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2. SALA TRONOWA -->
+    <article class="location reverse" data-reveal>
+      <div class="location-image-col">
+        <img src="assets/img/locations/throne_room.jpg" alt="Sala Tronowa Topkapı" class="location-image">
+      </div>
+      <div class="location-text-col">
+        <div class="location-numeral">II</div>
+        <div class="location-meta">Lokacja Druga</div>
+        <h3 class="location-name">
+          Arz Odası
+          <span class="location-name-sub">عرش · Sala Tronowa</span>
+        </h3>
+        <p class="location-desc">
+          Pod baldachimem z brokatu i pereł, w sali, w której nikt nie mógł
+          stać do góry — sułtan przyjmował wezyrów, ambasadorów i wyroki.
+          <em>To tu kaprys stawał się prawem,</em> a niewinność — zdradą.
+          Każdy krok po marmurze odbijał się echem o ośmiokątne ściany.
+        </p>
+        <div class="location-stat">
+          <div class="location-stat-item">
+            <div class="location-stat-value">XVI w.</div>
+            <div class="location-stat-label">Mehmed II</div>
+          </div>
+          <div class="location-stat-item">
+            <div class="location-stat-value">∞</div>
+            <div class="location-stat-label">Cisza</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3. HAREM -->
+    <article class="location" data-reveal>
+      <div class="location-image-col">
+        <img src="assets/img/locations/harem.jpg" alt="Harem Topkapı" class="location-image">
+      </div>
+      <div class="location-text-col">
+        <div class="location-numeral">III</div>
+        <div class="location-meta">Lokacja Trzecia</div>
+        <h3 class="location-name">
+          Harem
+          <span class="location-name-sub">حرم · Miasto kobiet</span>
+        </h3>
+        <p class="location-desc">
+          Czterysta komnat. Tysiąc kobiet. Eunuchowie czarni i biali, jedwab
+          z Bursy, kadzidło z Hadramautu. <em>Imperium wewnątrz imperium</em>,
+          gdzie polityka była szeptem, a śmierć — wymianą perły między palcami.
+          Z każdej alkowy wychodził inny tron.
+        </p>
+        <div class="location-stat">
+          <div class="location-stat-item">
+            <div class="location-stat-value">400</div>
+            <div class="location-stat-label">Komnat</div>
+          </div>
+          <div class="location-stat-item">
+            <div class="location-stat-value">1000+</div>
+            <div class="location-stat-label">Kobiet</div>
+          </div>
+          <div class="location-stat-item">
+            <div class="location-stat-value">280</div>
+            <div class="location-stat-label">Utopionych</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4. BOSFOR -->
+    <article class="location reverse" data-reveal>
+      <div class="location-image-col">
+        <img src="assets/img/locations/bosphorus.jpg" alt="Bosfor nocą" class="location-image">
+      </div>
+      <div class="location-text-col">
+        <div class="location-numeral">IV</div>
+        <div class="location-meta">Lokacja Czwarta</div>
+        <h3 class="location-name">
+          Bosfor
+          <span class="location-name-sub">بوغاز · Cieśnina pamięci</span>
+        </h3>
+        <p class="location-desc">
+          Ciemna woda między dwoma kontynentami. Ta sama, która niesie
+          jedwabne statki kupieckie z Wenecji, jednej nocy 1645 roku
+          <em>zamknęła w worach z piaskiem dwieście osiemdziesiąt
+          konkubin</em>. Następnego ranka rybacy nie chcieli zarzucać sieci.
+        </p>
+        <div class="location-stat">
+          <div class="location-stat-item">
+            <div class="location-stat-value">31 km</div>
+            <div class="location-stat-label">Długość</div>
+          </div>
+          <div class="location-stat-item">
+            <div class="location-stat-value">120 m</div>
+            <div class="location-stat-label">Głębokość</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- Iznik separator band -->
+<div class="iznik-band" aria-hidden="true">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="xMidYMid slice" fill="none">
+    <defs>
+      <pattern id="iznikRibbon" x="0" y="0" width="120" height="60" patternUnits="userSpaceOnUse">
+        <!-- Ośmiokątna gwiazda Iznik -->
+        <path d="M60 12 L72 24 L72 36 L60 48 L48 36 L48 24 Z" stroke="#C9A84C" stroke-width="0.6" fill="none"/>
+        <circle cx="60" cy="30" r="3" stroke="#C9A84C" stroke-width="0.4" fill="none"/>
+        <!-- Tulipany boczne -->
+        <path d="M15 30 Q20 22 25 30 Q30 22 35 30 M25 30 L25 38" stroke="#C9A84C" stroke-width="0.5"/>
+        <path d="M85 30 Q90 22 95 30 Q100 22 105 30 M95 30 L95 38" stroke="#C9A84C" stroke-width="0.5"/>
+        <!-- Łączące linie -->
+        <line x1="0" y1="30" x2="14" y2="30" stroke="#C9A84C" stroke-width="0.3"/>
+        <line x1="106" y1="30" x2="120" y2="30" stroke="#C9A84C" stroke-width="0.3"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="60" fill="url(#iznikRibbon)"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     SEKWENCJA 7 · ATLAS — TOPOGRAFIA WŁADZY (aerial photo)
+============================================================ -->
+<section class="topo-v2" id="atlas">
+
+  <!-- Header -->
+  <div class="topo-v2-head" data-reveal-stagger>
+    <div class="t-eyebrow">V · Atlas Imperium</div>
+    <h2 class="topo-v2-title">
+      Topografia <em style="color: var(--c-gold); font-style: italic;">władzy</em>
+    </h2>
+    <p class="t-lead" style="max-width: 720px;">
+      Pałac Topkapı, Bosfor, harem, kafes —<br>
+      miejsca, w których historia <em style="color: var(--c-gold); font-style: italic;">spuściła wzrok</em>.
+    </p>
+  </div>
+
+  <!-- Aerial photo + hotspots -->
+  <div class="topo-v2-stage" data-reveal>
+
+    <!-- Cinematic corner ornaments -->
+    <svg class="topo-v2-corner topo-v2-corner-tl" viewBox="0 0 60 60" fill="none">
+      <path d="M0 60 L0 0 L60 0" stroke="#C9A84C" stroke-width="1"/>
+      <path d="M4 56 L4 4 L56 4" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+    </svg>
+    <svg class="topo-v2-corner topo-v2-corner-tr" viewBox="0 0 60 60" fill="none">
+      <path d="M60 60 L60 0 L0 0" stroke="#C9A84C" stroke-width="1"/>
+      <path d="M56 56 L56 4 L4 4" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+    </svg>
+    <svg class="topo-v2-corner topo-v2-corner-bl" viewBox="0 0 60 60" fill="none">
+      <path d="M0 0 L0 60 L60 60" stroke="#C9A84C" stroke-width="1"/>
+      <path d="M4 4 L4 56 L56 56" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+    </svg>
+    <svg class="topo-v2-corner topo-v2-corner-br" viewBox="0 0 60 60" fill="none">
+      <path d="M60 0 L60 60 L0 60" stroke="#C9A84C" stroke-width="1"/>
+      <path d="M56 4 L56 56 L4 56" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+    </svg>
+
+    <!-- Photo -->
+    <div class="topo-v2-photo">
+      <img src="assets/img/topkapi_aerial.jpg" alt="Topkapı Palace · widok z lotu ptaka">
+      <div class="topo-v2-photo-vignette"></div>
+
+      <!-- Compass (overlay top-right) -->
+      <svg class="topo-v2-compass" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="44" fill="rgba(5,5,8,0.7)" stroke="#C9A84C" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="36" stroke="#C9A84C" stroke-width="0.3" fill="none" opacity="0.5"/>
+        <g stroke="#C9A84C" stroke-width="0.3" fill="none">
+          <line x1="50" y1="14" x2="50" y2="86"/>
+          <line x1="14" y1="50" x2="86" y2="50"/>
+          <line x1="22" y1="22" x2="78" y2="78"/>
+          <line x1="22" y1="78" x2="78" y2="22"/>
+        </g>
+        <path d="M50 16 L54 50 L50 84 L46 50 Z" fill="#D4AF37" opacity="0.9"/>
+        <path d="M50 16 L54 50 L50 50 Z" fill="#F5F0EB" opacity="0.7"/>
+        <text x="50" y="11" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#D4AF37">N</text>
+      </svg>
+
+      <!-- Cartouche -->
+      <div class="topo-v2-cartouche">
+        <div class="topo-v2-cartouche-title">Saray-ı Cedīd-i Āmire</div>
+        <div class="topo-v2-cartouche-sub">PALATIUM IMPERIALE · CONSTANTINOPOLIS</div>
+        <div class="topo-v2-cartouche-coords">41°00′45″N · 28°59′05″E</div>
+      </div>
+
+      <!-- Scale -->
+      <div class="topo-v2-scale">
+        <div class="topo-v2-scale-bar">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="topo-v2-scale-label">500 m</div>
+      </div>
+
+      <!-- HOTSPOTS — pozycje na aerial photo (Topkapi promontorium) -->
+      <!-- KAFES -->
+      <button class="topo-v2-hotspot" style="left: 49%; top: 47%;" data-tooltip-side="right" aria-label="Kafes">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">I · Złota Cela</span>
+          <span class="hs-name">Kafes</span>
+          <span class="hs-desc">Tu narodził się obłęd. Siedemnaście lat ciszy.</span>
+          <span class="hs-arabic">قفس</span>
+        </span>
+      </button>
+
+      <!-- HAREM -->
+      <button class="topo-v2-hotspot" style="left: 56%; top: 56%;" data-tooltip-side="right" aria-label="Harem">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">II · Miasto kobiet</span>
+          <span class="hs-name">Harem</span>
+          <span class="hs-desc">Imperium w imperium. Polityka prowadzona jedwabiem.</span>
+          <span class="hs-arabic">حرم</span>
+        </span>
+      </button>
+
+      <!-- ARZ ODASI - SALA TRONOWA -->
+      <button class="topo-v2-hotspot" style="left: 60%; top: 62%;" data-tooltip-side="left" aria-label="Sala Tronowa">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">III · Sala Tronowa</span>
+          <span class="hs-name">Arz Odası</span>
+          <span class="hs-desc">Gdzie kaprys stawał się prawem imperium.</span>
+          <span class="hs-arabic">عرش</span>
+        </span>
+      </button>
+
+      <!-- BĀB-I HÜMĀYŪN -->
+      <button class="topo-v2-hotspot" style="left: 38%; top: 86%;" data-tooltip-side="left" aria-label="Bāb-ı Hümāyūn">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">IV · Brama Imperialna</span>
+          <span class="hs-name">Bāb-ı Hümāyūn</span>
+          <span class="hs-desc">Przekroczyć ją znaczyło wejść w inny świat.</span>
+          <span class="hs-arabic">باب همايون</span>
+        </span>
+      </button>
+
+      <!-- HAGIA SOPHIA -->
+      <button class="topo-v2-hotspot" style="left: 17%; top: 70%;" data-tooltip-side="right" aria-label="Hagia Sophia">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">V · Wielka Kopuła</span>
+          <span class="hs-name">Aya Sofya</span>
+          <span class="hs-desc">Pieczęć imperium. Bizancjum przerodzone w sułtanat.</span>
+          <span class="hs-arabic">آيا صوفيا</span>
+        </span>
+      </button>
+
+      <!-- BOSFOR -->
+      <button class="topo-v2-hotspot" style="left: 86%; top: 32%;" data-tooltip-side="left" aria-label="Bosfor">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">VI · Cieśnina</span>
+          <span class="hs-name">Boğaziçi</span>
+          <span class="hs-desc">Cmentarz 280 niewinnych. Noc, której nie da się odwrócić.</span>
+          <span class="hs-arabic">بوغاز</span>
+        </span>
+      </button>
+
+      <!-- ZŁOTY RÓG -->
+      <button class="topo-v2-hotspot" style="left: 28%; top: 30%;" data-tooltip-side="right" aria-label="Złoty Róg">
+        <span class="topo-v2-hotspot-ring"></span>
+        <span class="topo-v2-hotspot-dot"></span>
+        <span class="topo-v2-hotspot-line"></span>
+        <span class="topo-v2-hotspot-label">
+          <span class="hs-tag">VII · Estuarium</span>
+          <span class="hs-name">Haliç</span>
+          <span class="hs-desc">Złoty Róg. Brama miasta od strony Stambułu.</span>
+          <span class="hs-arabic">هاليج</span>
+        </span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Legend below the photo -->
+  <div class="topo-v2-legend" data-reveal-stagger>
+    <div class="topo-v2-legend-item"><span class="lg-num">I</span><span class="lg-name">Kafes</span><span class="lg-meta">قفس</span></div>
+    <div class="topo-v2-legend-item"><span class="lg-num">II</span><span class="lg-name">Harem</span><span class="lg-meta">حرم</span></div>
+    <div class="topo-v2-legend-item"><span class="lg-num">III</span><span class="lg-name">Arz Odası</span><span class="lg-meta">عرش</span></div>
+    <div class="topo-v2-legend-item"><span class="lg-num">IV</span><span class="lg-name">Bāb-ı Hümāyūn</span><span class="lg-meta">باب</span></div>
+    <div class="topo-v2-legend-item"><span class="lg-num">V</span><span class="lg-name">Aya Sofya</span><span class="lg-meta">صوفيا</span></div>
+    <div class="topo-v2-legend-item"><span class="lg-num">VI</span><span class="lg-name">Boğaziçi · Bosfor</span><span class="lg-meta">بوغاز</span></div>
+    <div class="topo-v2-legend-item"><span class="lg-num">VII</span><span class="lg-name">Haliç · Złoty Róg</span><span class="lg-meta">هاليج</span></div>
+  </div>
+
+</section>
+
+<!-- SEKWENCJA 8 · KONWERGENCJA USUNIĘTA CAŁKOWICIE -->
+
+<!-- ============================================================
+     SEKWENCJA 9 · PIECZĘĆ — STOPKA IMPERIALNA
+============================================================ -->
+<!-- Iznik band przed stopką USUNIĘTY — płynne przejście -->
+
+<footer class="imperial-footer-v2">
+  <!-- Tuğra watermark in background -->
+  <svg class="footer-tugra-bg" viewBox="0 0 600 300" fill="none" aria-hidden="true">
+    <g stroke="#C9A84C" stroke-width="0.6" fill="none" opacity="0.06">
+      <ellipse cx="300" cy="150" rx="280" ry="130"/>
+      <path d="M80 180 Q120 80 220 100 Q280 50 360 80 Q430 60 480 130 Q500 80 540 120"/>
+      <path d="M120 200 Q200 220 280 200 M100 220 Q180 250 300 230 Q420 210 500 240"/>
+      <path d="M260 60 L260 150 M240 100 L280 100 M220 130 L300 130"/>
+      <path d="M340 60 L340 150 M320 100 L360 100 M300 130 L380 130"/>
+      <circle cx="500" cy="150" r="6"/>
+      <circle cx="520" cy="170" r="4"/>
+    </g>
+  </svg>
+
+  <div class="footer-v2-inner">
+
+    <!-- HEAD ROW: Manifest line + newsletter -->
+    <div class="footer-v2-head">
+      <div class="footer-v2-headline">
+        <div class="t-eyebrow" style="padding-left: 0; margin-bottom: 16px;">VII · Pieczęć</div>
+        <h3 style="font-family: var(--f-display); font-weight: 200; font-size: clamp(36px, 4vw, 56px); letter-spacing: -0.03em; line-height: 1; color: var(--c-warm-white); max-width: 640px;">
+          Zostań w cieniu pałacu.<br>
+          <em style="font-style: italic; color: var(--c-gold);">Słyszysz, jak korytarz oddycha?</em>
+        </h3>
+      </div>
+
+      <form class="footer-v2-newsletter" onsubmit="event.preventDefault(); this.querySelector('.nl-feedback').textContent='Pieczęć została odciśnięta. Czekaj na list.';">
+        <label class="t-eyebrow" style="padding-left: 0;">Otrzymuj wieści z dworu</label>
+        <div class="nl-row">
+          <input type="email" required placeholder="twoj@email.pl" class="nl-input">
+          <button type="submit" class="nl-submit">
+            <span>Zapisz się</span>
+            <svg width="20" height="10" viewBox="0 0 20 10" fill="none"><path d="M0 5 L19 5 M14 1 L19 5 L14 9" stroke="currentColor" stroke-width="1"/></svg>
+          </button>
+        </div>
+        <div class="nl-feedback"></div>
+        <p class="nl-fine">Otrzymasz fragmenty nieopublikowane. Bez spamu. Pieczęć honoru.</p>
+      </form>
+    </div>
+
+    <!-- 4-COLUMN GRID -->
+    <div class="footer-v2-cols">
+
+      <!-- COL 1: Brand -->
+      <div class="footer-v2-col">
+        <div class="footer-v2-mark">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M16 4 L20 12 L28 16 L20 20 L16 28 L12 20 L4 16 L12 12 Z M28 16 L16 28 L4 16 L16 4 Z" stroke="#C9A84C" stroke-width="0.8"/>
+          </svg>
+          <div>
+            <div class="footer-v2-brand">Tomasz Kotliński</div>
+            <div class="footer-v2-sub">Autor · Twórca Uniwersum</div>
+          </div>
+        </div>
+        <p class="footer-v2-blurb">
+          „Każde słowo wypala ślad."<br>
+          Cztery tomy o tym, jak <em style="color: var(--c-gold);">luksus, samotność i bezkarna władza</em>
+          wspólnie produkują szaleństwo.
+        </p>
+      </div>
+
+      <!-- COL 2: Tetralogia -->
+      <div class="footer-v2-col">
+        <div class="footer-v2-label">Tetralogia</div>
+        <ul class="footer-v2-list">
+          <li><a href="#tomy"><span class="num">I</span> Kafes</a></li>
+          <li><a href="#tom-2"><span class="num">II</span> Tron</a></li>
+          <li><a href="#tom-3"><span class="num">III</span> Otchłań</a></li>
+          <li><a href="#tom-4"><span class="num">IV</span> Upadek</a></li>
+        </ul>
+      </div>
+
+      <!-- COL 3: Świat -->
+      <div class="footer-v2-col">
+        <div class="footer-v2-label">Świat powieści</div>
+        <ul class="footer-v2-list">
+          <li><a href="#lokacje"><span class="num">·</span> Kafes — Złota cela</a></li>
+          <li><a href="#lokacje"><span class="num">·</span> Arz Odası — Sala Tronowa</a></li>
+          <li><a href="#lokacje"><span class="num">·</span> Harem — Miasto kobiet</a></li>
+          <li><a href="#lokacje"><span class="num">·</span> Bosfor — Cieśnina pamięci</a></li>
+          <li><a href="#atlas"><span class="num">·</span> Atlas Topkapi</a></li>
+        </ul>
+      </div>
+
+      <!-- COL 4: Kontakt -->
+      <div class="footer-v2-col">
+        <div class="footer-v2-label">Audiencja</div>
+        <div class="footer-v2-contact">
+          <a href="/cdn-cgi/l/email-protection#bcd7d3d2c8ddd7c8fcd7d3c8d0d5d2cfd7d592ccd0" class="footer-v2-email">
+            <span class="__cf_email__" data-cfemail="a3c8cccdd7c2c8d7e3c8ccd7cfcacdd0c8ca8dd3cf">[email&#160;protected]</span>
+          </a>
+          <div class="footer-v2-cont-meta">
+            <div>Wydawnictwo · 2026</div>
+            <div>Audiobooki w produkcji</div>
+          </div>
+          <div class="footer-v2-social">
+            <a href="#" aria-label="Instagram" title="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="0.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" title="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M15 4 L18 4 L18 8 L15 8 Q14 8 14 9 L14 11 L18 11 L17.5 15 L14 15 L14 22 L10 22 L10 15 L7 15 L7 11 L10 11 L10 8 Q10 4 14 4"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18"/><rect x="6" y="10" width="2.5" height="9"/><circle cx="7.25" cy="6.5" r="1.25"/><path d="M11 19 L11 10 L13.5 10 L13.5 11.5 Q14.5 10 16.5 10 Q19 10 19 13 L19 19 L16.5 19 L16.5 13.5 Q16.5 12 15 12 Q13.5 12 13.5 13.5 L13.5 19 Z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" title="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M10 9 L15 12 L10 15 Z" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CENTRAL SEAL ROW -->
+    <div class="footer-v2-seal">
+      <div class="footer-v2-seal-line"></div>
+      <svg class="footer-v2-seal-mark" viewBox="0 0 140 140" fill="none">
+        <g stroke="#C9A84C" fill="none">
+          <!-- Outer wax-seal circle -->
+          <circle cx="70" cy="70" r="65" stroke-width="0.6"/>
+          <circle cx="70" cy="70" r="58" stroke-width="0.3" opacity="0.6"/>
+          <circle cx="70" cy="70" r="52" stroke-width="0.2" opacity="0.4"/>
+          <!-- Calligraphic tugra-style flourish -->
+          <path d="M28 76 Q35 50 56 56 Q70 38 86 48 Q104 44 110 64" stroke-width="1"/>
+          <path d="M40 82 Q56 88 72 86 M34 90 Q52 102 72 96 Q92 88 104 96" stroke-width="0.7"/>
+          <path d="M70 38 L70 68 M62 50 L78 50 M54 60 L86 60" stroke-width="0.7"/>
+          <circle cx="104" cy="62" r="2" fill="#C9A84C"/>
+          <circle cx="108" cy="68" r="1.5" fill="#C9A84C"/>
+          <!-- Octagon star in center bottom -->
+          <path d="M70 96 L74 102 L80 102 L76 106 L78 112 L70 108 L62 112 L64 106 L60 102 L66 102 Z" stroke-width="0.5"/>
+          <!-- Inscription ring -->
+          <text x="70" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="6" letter-spacing="3" fill="#C9A84C" stroke="none">SIGILLUM · IMPERII</text>
+          <text x="70" y="132" text-anchor="middle" font-family="JetBrains Mono" font-size="6" letter-spacing="3" fill="#C9A84C" stroke="none">ANNO MMXXVI</text>
+        </g>
+      </svg>
+      <div class="footer-v2-seal-line"></div>
+    </div>
+
+    <!-- LEGAL ROW -->
+    <div class="footer-v2-legal">
+      <div class="footer-v2-legal-l">
+        <span>© 2026 Tomasz Kotliński</span>
+        <span class="dot">·</span>
+        <span>Wszelkie prawa zastrzeżone</span>
+        <span class="dot">·</span>
+        <span>Made with reverence in Warsaw</span>
+      </div>
+      <div class="footer-v2-legal-r">
+        <span style="font-family: 'Amiri', 'Noto Naskh Arabic', serif; font-size: 18px; color: var(--c-gold); letter-spacing: 0.1em;">الحرم المجنون</span>
+        <span class="dot">·</span>
+        <span>Złota Klatka · MDCXL—MDCXLVIII</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/runtime.js?v=10"></script>
+<script src="assets/js/cinematics.js?v=6" defer></script>
+
+<sbody>
+<scrml>
+<scrip<scrip<scrip<scrip<scrip

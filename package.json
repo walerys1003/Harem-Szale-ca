@@ -1,0 +1,21 @@
+{
+  "name": "harem-szalenca",
+  "version": "1.0.0",
+  "description": "Strona autorska tetralogii Harem Szaleńca — Złota Klatka · Tomasz Kotliński",
+  "scripts": {
+    "dev": "npx serve . --listen 3000 --no-clipboard",
+    "start": "npx serve . --listen 3000 --no-clipboard"
+  },
+  "keywords": [
+    "harem",
+    "szalenca",
+    "kotlinski",
+    "tetralogia"
+  ],
+  "author": "Tomasz Kotliński",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

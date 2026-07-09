@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Nie indeksuj rawów i thumbnails
+Disallow: /assets/raw/
+Disallow: /screenshots/
+Disallow: /.thumbnail.jpg
+Disallow: /*.srcmap.json$
+
+Sitemap: https://haremszalenca.pl/sitemap.xml

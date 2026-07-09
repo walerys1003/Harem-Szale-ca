@@ -1,0 +1,28 @@
+# Node.js
+node_modules/
+
+# Build
+dist/
+.wrangler/
+
+# Env
+.env
+.dev.vars
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# PM2
+.pm2/
+pids/
+*.pid
+
+# Backup
+*.tar.gz
+*.zip
+*.bak

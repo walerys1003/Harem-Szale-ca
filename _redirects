@@ -1,0 +1,23 @@
+# Cloudflare Pages redirects configuration
+# https://developers.cloudflare.com/pages/platform/redirects/
+
+# www → apex (301 permanent)
+https://www.haremszalenca.pl/*  https://haremszalenca.pl/:splat  301
+
+# Stara sekcja zamowienia → tetralogia (usunięta sekcja)
+/#zamow  /#tomy  301
+
+# Alias do 4 tomów (dla łatwiejszych URLów)
+/tom-1  /#tom-1  302
+/tom-2  /#tom-2  302
+/tom-3  /#tom-3  302
+/tom-4  /#tom-4  302
+/kafes  /#tom-1  302
+/tron   /#tom-2  302
+/otchlan /#tom-3  302
+/upadek /#tom-4  302
+
+# Alias do sekcji
+/manifest  /#manifest  302
+/autor     /#autor     302
+/atlas     /#atlas     302

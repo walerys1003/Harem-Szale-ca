@@ -1,0 +1,543 @@
+/* ================================================================
+   HAREM SZALEŃCA — RUNTIME
+   Preloader · Custom Cursor · Particles · Reveals · Shaders
+   ================================================================ */
+
+(() => {
+  'use strict';
+
+  /* ============== PRELOADER ============== */
+  function initPreloader() {
+    const preloader = document.querySelector('.preloader');
+    if (!preloader) return;
+    const path = preloader.querySelector('.star-path');
+    if (path) {
+      const len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      requestAnimationFrame(() => {
+        path.style.transition = 'stroke-dashoffset 2.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        path.style.strokeDashoffset = '0';
+      });
+    }
+    // Szybki intro — błyskawiczne ładowanie
+    setTimeout(() => preloader.classList.add('reveal'), 200);
+    setTimeout(() => {
+      preloader.classList.add('done');
+      document.body.classList.add('loaded');
+    }, 500);
+  }
+
+  /* ============== CUSTOM CURSOR ============== (WYŁĄCZONE — zwykły wskaźnik) */
+  function initCursor() {
+    // Wyłączony custom cursor — user chce standardowy wskaźnik myszy
+    document.documentElement.style.cursor = 'auto';
+    document.body.style.cursor = 'auto';
+    return;
+    // legacy — nieużywany
+    if (matchMedia('(max-width: 768px)').matches) return;
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor';
+    const ring = document.createElement('div');
+    ring.className = 'cursor-ring';
+    document.body.append(cursor, ring);
+
+    let cx = 0, cy = 0, rx = 0, ry = 0;
+    let tx = 0, ty = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX; ty = e.clientY;
+    });
+
+    function loop() {
+      cx += (tx - cx) * 0.32;
+      cy += (ty - cy) * 0.32;
+      rx += (tx - rx) * 0.16;
+      ry += (ty - ry) * 0.16;
+      cursor.style.transform = `translate(${cx - 4}px, ${cy - 4}px)`;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    const activate = () => ring.classList.add('active');
+    const deactivate = () => ring.classList.remove('active');
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .tome-card, .shadow-card, .topo-hotspot, .btn-imperial, .btn-conv')) activate();
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .tome-card, .shadow-card, .topo-hotspot, .btn-imperial, .btn-conv')) deactivate();
+    });
+  }
+
+  /* ============== ZŁOTY PYŁ (canvas particles) ============== */
+  function initParticles() {
+    const canvas = document.querySelector('.particles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      w = canvas.width = window.innerWidth * dpr;
+      h = canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(dpr, dpr);
+    }
+    resize();
+    window.addEventListener('resize', () => {
+      const dpr = window.devicePixelRatio || 1;
+      w = canvas.width = window.innerWidth * dpr;
+      h = canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(dpr, dpr);
+    });
+
+    const COUNT = 55;
+    for (let i = 0; i < COUNT; i++) {
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18 - 0.05,
+        size: Math.random() * 2 + 1.4,
+        alpha: Math.random() * 0.05 + 0.02,
+        twinkle: Math.random() * Math.PI * 2,
+      });
+    }
+
+    let mx = -1000, my = -1000;
+    window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+
+    function drawOctagon(x, y, r) {
+      ctx.beginPath();
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2 - Math.PI / 8;
+        const px = x + Math.cos(a) * r;
+        const py = y + Math.sin(a) * r;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      const dpr = window.devicePixelRatio || 1;
+      for (const p of particles) {
+        // Magnetism (repel from cursor)
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 80 && dist > 0) {
+          const force = (80 - dist) / 80 * 0.4;
+          p.vx += (dx / dist) * force * 0.05;
+          p.vy += (dy / dist) * force * 0.05;
+        }
+        p.vx *= 0.985; p.vy *= 0.985;
+        p.x += p.vx; p.y += p.vy;
+        p.twinkle += 0.012;
+        if (p.x < -10) p.x = window.innerWidth + 10;
+        if (p.x > window.innerWidth + 10) p.x = -10;
+        if (p.y < -10) p.y = window.innerHeight + 10;
+        if (p.y > window.innerHeight + 10) p.y = -10;
+        const a = p.alpha * (0.5 + 0.5 * Math.sin(p.twinkle));
+        ctx.fillStyle = `rgba(212, 175, 55, ${a})`;
+        drawOctagon(p.x, p.y, p.size);
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  /* ============== JEDWABNA MGŁA — WebGL shader ============== */
+  function initSilkShader(canvasEl, palette = 'noir') {
+    if (!canvasEl) return;
+    const gl = canvasEl.getContext('webgl') || canvasEl.getContext('experimental-webgl');
+    if (!gl) return;
+
+    const palettes = {
+      noir:   { a: [0.020, 0.020, 0.031], b: [0.084, 0.110, 0.184], c: [0.420, 0.115, 0.184] },
+      gold:   { a: [0.020, 0.020, 0.031], b: [0.420, 0.115, 0.184], c: [0.788, 0.659, 0.298] },
+      water:  { a: [0.020, 0.020, 0.031], b: [0.040, 0.060, 0.090], c: [0.788, 0.659, 0.298] },
+    };
+    const P = palettes[palette] || palettes.noir;
+
+    const vert = `
+      attribute vec2 a_pos;
+      void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+    `;
+    const frag = `
+      precision highp float;
+      uniform vec2 u_res;
+      uniform float u_t;
+      uniform vec3 u_a;
+      uniform vec3 u_b;
+      uniform vec3 u_c;
+
+      // 2D noise
+      vec2 hash(vec2 p) {
+        p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+        return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+      }
+      float noise(vec2 p) {
+        vec2 i = floor(p); vec2 f = fract(p);
+        vec2 u = f * f * (3.0 - 2.0 * f);
+        return mix(
+          mix(dot(hash(i + vec2(0.0,0.0)), f - vec2(0.0,0.0)),
+              dot(hash(i + vec2(1.0,0.0)), f - vec2(1.0,0.0)), u.x),
+          mix(dot(hash(i + vec2(0.0,1.0)), f - vec2(0.0,1.0)),
+              dot(hash(i + vec2(1.0,1.0)), f - vec2(1.0,1.0)), u.x),
+          u.y
+        );
+      }
+      float fbm(vec2 p) {
+        float v = 0.0; float a = 0.5;
+        for (int i = 0; i < 5; i++) {
+          v += a * noise(p);
+          p *= 2.0; a *= 0.5;
+        }
+        return v;
+      }
+      void main() {
+        vec2 uv = gl_FragCoord.xy / u_res.xy;
+        vec2 p = uv * 2.5;
+        float t = u_t * 0.03;
+        vec2 q = vec2(fbm(p + t), fbm(p - t));
+        vec2 r = vec2(fbm(p + 1.5 * q + vec2(1.7, 9.2) + t * 0.5),
+                      fbm(p + 1.5 * q + vec2(8.3, 2.8) + t * 0.3));
+        float f = fbm(p + r);
+        vec3 col = mix(u_a, u_b, smoothstep(-0.2, 0.6, f));
+        col = mix(col, u_c, smoothstep(0.4, 1.0, length(r)));
+        col *= 1.1;
+        // Vignette
+        float vig = smoothstep(1.4, 0.4, length(uv - 0.5));
+        col *= vig;
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `;
+
+    function compile(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(s));
+        return null;
+      }
+      return s;
+    }
+    const vs = compile(gl.VERTEX_SHADER, vert);
+    const fs = compile(gl.FRAGMENT_SHADER, frag);
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(prog, 'a_pos');
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    const uRes = gl.getUniformLocation(prog, 'u_res');
+    const uT = gl.getUniformLocation(prog, 'u_t');
+    const uA = gl.getUniformLocation(prog, 'u_a');
+    const uB = gl.getUniformLocation(prog, 'u_b');
+    const uC = gl.getUniformLocation(prog, 'u_c');
+
+    gl.uniform3fv(uA, P.a);
+    gl.uniform3fv(uB, P.b);
+    gl.uniform3fv(uC, P.c);
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const w = canvasEl.clientWidth * dpr;
+      const h = canvasEl.clientHeight * dpr;
+      if (canvasEl.width !== w || canvasEl.height !== h) {
+        canvasEl.width = w; canvasEl.height = h;
+        gl.viewport(0, 0, w, h);
+        gl.uniform2f(uRes, w, h);
+      }
+    }
+
+    const start = performance.now();
+    function render() {
+      resize();
+      gl.uniform1f(uT, (performance.now() - start) / 1000);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(render);
+    }
+    render();
+  }
+
+  /* ============== REVEAL ON SCROLL ============== */
+  function initReveal() {
+    const els = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    els.forEach(el => io.observe(el));
+  }
+
+  /* ============== NAV SCROLL STATE ============== */
+  function initNav() {
+    const nav = document.querySelector('.imperial-nav');
+    if (!nav) return;
+    const onScroll = () => {
+      if (window.scrollY > 60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ============== PARALLAX ============== */
+  function initParallax() {
+    const els = document.querySelectorAll('[data-parallax]');
+    function onScroll() {
+      const sy = window.scrollY;
+      els.forEach(el => {
+        const speed = parseFloat(el.dataset.parallax) || 0.3;
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + sy;
+        const offset = (sy - top) * speed;
+        el.style.transform = `translate3d(0, ${offset}px, 0)`;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ============== HORIZONTAL SCROLL-JACK (Tetralogia) ============== */
+  function initTetraScroll() {
+    const section = document.querySelector('.tetra-scroll');
+    if (!section) return;
+    const track = section.querySelector('#tetraTrack');
+    const fill = section.querySelector('#tetraFill');
+    const curEl = section.querySelector('#tetraCur');
+    const labelEl = section.querySelector('#tetraLabel');
+    if (!track) return;
+    const panels = track.querySelectorAll('.tetra-panel');
+    const panelCount = panels.length;
+    const labels = ['Kafes', 'Tron', 'Otchłań', 'Upadek'];
+
+    // skip on mobile (stacked)
+    if (matchMedia('(max-width: 1000px)').matches) return;
+
+    let curIdx = 0;
+
+    function update() {
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+      const scrollableDist = sectionHeight - viewportHeight;
+      // progress 0..1 while section is being scrolled through
+      const progressRaw = -rect.top / scrollableDist;
+      const progress = Math.max(0, Math.min(1, progressRaw));
+
+      // Track translateX: 0% at start → -(panelCount-1) * 100vw at end
+      const maxShiftVw = (panelCount - 1) * 100;
+      const shift = -progress * maxShiftVw;
+      track.style.transform = `translate3d(${shift}vw, 0, 0)`;
+
+      // Progress bar fill
+      if (fill) fill.style.width = (progress * 100).toFixed(1) + '%';
+
+      // Current panel idx (snap to nearest)
+      const newIdx = Math.min(panelCount - 1, Math.round(progress * (panelCount - 1)));
+      if (newIdx !== curIdx) {
+        curIdx = newIdx;
+        if (curEl) curEl.textContent = '0' + (newIdx + 1);
+        if (labelEl) labelEl.textContent = labels[newIdx] || '';
+      }
+
+      // Per-panel 3D book tilt based on position
+      panels.forEach((panel, i) => {
+        const book = panel.querySelector('.book3d');
+        if (!book) return;
+        // each panel spans 1/(N-1) of progress
+        const localProgress = progress * (panelCount - 1) - i; // -inf..1..+inf, ~0 means centered
+        const tilt = -22 + localProgress * 18; // tilt swings
+        book.style.transform = `rotateY(${tilt}deg) rotateX(${4 - Math.abs(localProgress) * 2}deg)`;
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* ============== DRAMATIS — SCROLL-LOCK PINNING ==============
+     Gdy sekcja dochodzi do środka viewportu — "przykleja się", a każdy
+     wheel/touchmove down przekłada się na horizontal scroll po postaciach.
+     Gdy dojedziemy do końca (right edge) — puszczamy scroll strony dalej.
+     ============================================================= */
+  function initDramatis() {
+    const wrap = document.querySelector('.dramatis-track-wrap');
+    if (!wrap) return;
+    // Early marker — potwierdza że funkcja wystartowała, nawet gdyby coś dalej zawiodło
+    window.__dramatisInited = 'started';
+    const section = document.querySelector('#cienie') || wrap.closest('section');
+    if (!section) return;
+    try {
+      const fill = document.querySelector('#dramatisFill');
+      const currentEl = document.querySelector('#dramatisCurrent');
+      const totalEl = document.querySelector('#dramatisTotal');
+      const track = document.querySelector('#dramatisTrack');
+      const cards = track ? track.children : [];
+      const cardCount = cards.length;
+      if (totalEl && cardCount > 0) totalEl.textContent = String(cardCount);
+
+    // Progress bar + counter (na scroll wewnątrz wrap)
+    function updateProgress() {
+      const max = wrap.scrollWidth - wrap.clientWidth;
+      if (max <= 0) return;
+      const p = Math.min(1, Math.max(0, wrap.scrollLeft / max));
+      if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+      if (currentEl && cardCount > 0) {
+        const idx = Math.min(cardCount, Math.max(1, Math.round(p * (cardCount - 1)) + 1));
+        currentEl.textContent = String(idx);
+      }
+    }
+    wrap.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // ==== SECTION-LEVEL SCROLL LOCK (v2 — hard release + escape-through) ====
+    function isSectionCentered() {
+      const r = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const center = r.top + r.height / 2;
+      // Aktywacja tylko gdy sekcja jest DOBRZE wycentrowana (35-65% viewportu)
+      return center > vh * 0.35 && center < vh * 0.65;
+    }
+    function horizMax() { return wrap.scrollWidth - wrap.clientWidth; }
+
+    function getSnapPositions() {
+      const positions = [];
+      for (const card of cards) {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const wrapCenter = wrap.clientWidth / 2;
+        positions.push(cardCenter - wrapCenter);
+      }
+      return positions;
+    }
+    function currentCardIdx() {
+      const positions = getSnapPositions();
+      let bestIdx = 0, bestDist = Infinity;
+      for (let i = 0; i < positions.length; i++) {
+        const d = Math.abs(positions[i] - wrap.scrollLeft);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      }
+      return bestIdx;
+    }
+    function snapToCard(idx) {
+      const positions = getSnapPositions();
+      idx = Math.max(0, Math.min(positions.length - 1, idx));
+      wrap.scrollTo({ left: positions[idx], behavior: 'smooth' });
+    }
+
+    let wheelCooldown = false;
+    // Release cooldown — po dojściu do krawędzi nie łapiemy scrolla przez chwilę,
+    // żeby strona mogła płynnie wyjść z sekcji (w dół / w górę)
+    let releaseUntil = 0;
+
+    window.addEventListener('wheel', (e) => {
+      const now = Date.now();
+      // Release window — puszczamy naturalny scroll strony
+      if (now < releaseUntil) return;
+      if (!isSectionCentered()) return;
+      const delta = e.deltaY;
+      if (delta === 0) return;
+      const idx = currentCardIdx();
+      const isLast = idx === cardCount - 1;
+      const isFirst = idx === 0;
+
+      // KRAWĘDŹ: puszczamy scroll strony NATURALNIE + release cooldown
+      if ((isFirst && delta < 0) || (isLast && delta > 0)) {
+        releaseUntil = now + 700; // 700ms okno bez łapania
+        return; // nie preventDefault — niech strona scrolluje normalnie
+      }
+
+      e.preventDefault();
+      if (wheelCooldown) return;
+      wheelCooldown = true;
+      snapToCard(idx + (delta > 0 ? 1 : -1));
+      setTimeout(() => { wheelCooldown = false; }, 420);
+    }, { passive: false });
+
+    // TOUCH — dla mobile: pionowy swipe w sekcji przekłada się na horizontal
+    let touchStartY = 0, touchStartX = 0, touchStartScroll = 0;
+    window.addEventListener('touchstart', (e) => {
+      if (!isSectionCentered()) return;
+      touchStartY = e.touches[0].pageY;
+      touchStartX = e.touches[0].pageX;
+      touchStartScroll = wrap.scrollLeft;
+    }, { passive: true });
+    window.addEventListener('touchmove', (e) => {
+      if (!isSectionCentered()) return;
+      const dy = touchStartY - e.touches[0].pageY;
+      const dx = touchStartX - e.touches[0].pageX;
+      // Jeśli głównie pionowo — konwertuj
+      if (Math.abs(dy) > Math.abs(dx)) {
+        const max = horizMax();
+        const newScroll = touchStartScroll + dy * 1.5;
+        if (newScroll > 0 && newScroll < max) {
+          e.preventDefault();
+          wrap.scrollLeft = newScroll;
+        }
+      }
+    }, { passive: false });
+
+    // DRAG myszką (bonus — działa też bezpośrednio na kartach)
+    let isDown = false, startX = 0, scrollLeftStart = 0;
+    wrap.addEventListener('mousedown', (e) => {
+      isDown = true;
+      wrap.style.cursor = 'grabbing';
+      startX = e.pageX;
+      scrollLeftStart = wrap.scrollLeft;
+    });
+    document.addEventListener('mouseup', () => {
+      isDown = false;
+      if (wrap) wrap.style.cursor = 'grab';
+    });
+    document.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      wrap.scrollLeft = scrollLeftStart - (e.pageX - startX) * 1.4;
+    });
+
+      window.__dramatisInited = true;
+    } catch (err) {
+      console.error('[dramatis] init failed:', err);
+      window.__dramatisInited = 'error:' + (err && err.message ? err.message : String(err));
+    }
+  }
+
+  /* ============== BOOT ============== */
+  function boot() {
+    initPreloader();
+    initCursor();
+    initParticles();
+    initNav();
+    initReveal();
+    initParallax();
+    initDramatis();
+    document.querySelectorAll('[data-shader]').forEach(c => {
+      initSilkShader(c, c.dataset.shader);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else boot();
+})();

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
+  <url>
+    <loc>https://haremszalenca.pl/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://haremszalenca.pl/assets/img/hero_trio_v2.jpg</image:loc>
+      <image:title>Harem Szaleńca — İbrahim I, Kösem Sultan, Şekerpare</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://haremszalenca.pl/assets/img/covers/cover_kafes.png</image:loc>
+      <image:title>Kafes — Tom I</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://haremszalenca.pl/assets/img/covers/cover_tron.png</image:loc>
+      <image:title>Tron — Tom II</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://haremszalenca.pl/assets/img/covers/cover_otchlan.png</image:loc>
+      <image:title>Otchłań — Tom III</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://haremszalenca.pl/assets/img/covers/cover_upadek.png</image:loc>
+      <image:title>Upadek — Tom IV</image:title>
+    </image:image>
+  </url>
+</urlset>
