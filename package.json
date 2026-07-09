@@ -4,7 +4,9 @@
   "description": "Strona autorska tetralogii Harem Szaleńca — Złota Klatka · Tomasz Kotliński",
   "scripts": {
     "dev": "npx serve . --listen 3000 --no-clipboard",
-    "start": "npx serve . --listen 3000 --no-clipboard"
+    "start": "npx serve . --listen 3000 --no-clipboard",
+    "build": "mkdir -p dist && cp -r index.html robots.txt sitemap.xml _headers _redirects assets dist/",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name sagaturecka"
   },
   "keywords": [
     "harem",
