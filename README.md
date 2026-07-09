@@ -157,6 +157,33 @@ assets/
 - **Stos**: Vanilla HTML5 + CSS3 + ES6+ JS
 - **Cache**: Cloudflare CDN (headers skonfigurowane w `_headers`)
 - **Redeploy**: `cp -r index.html robots.txt sitemap.xml _headers _redirects assets dist/ && npx wrangler pages deploy dist --project-name sagaturecka`
+
+### Poprawki wydajności i UX (2026-07-09)
+
+Strona po pierwszym deployu zawieszała się na starcie (czarny ekran, brak
+reakcji przez kilkanaście-dwadzieścia sekund) i miała "szarpany" scroll
+w sekcji "Cienie Pałacu". Przyczyny i naprawy:
+
+1. **28MB obrazów JPG/PNG → 2.2MB WebP** (redukcja ~92%). Wszystkie obrazy
+   poza hero mają `loading="lazy"`.
+2. **WebGL shader "jedwabna mgła" całkowicie wyłączony.** Zmierzony realny
+   czas samego `canvas.getContext('webgl')` na maszynie bez sprzętowego GPU
+   (VM / sesja zdalna / słabe sterowniki) wynosił ~7-8s, **zanim** cokolwiek
+   się wyrenderowało — to był właśnie zgłoszony "zawieszony czarny ekran".
+   To wywołanie jest synchroniczne i nie da się go przetimeoutować z JS;
+   flaga `failIfMajorPerformanceCaveat` jest ignorowana przez część stosów
+   GPU. Zastąpiony czysto CSS-owym animowanym gradientem (`.bg-canvas` w
+   `imperium.css`) — wizualnie zbliżony, renderuje się od razu.
+3. **Scroll-jacking w sekcji "Cienie Pałacu" naprawiony.** Poprzednia wersja
+   blokowała kolejne zdarzenia `wheel` na 420ms po każdym "snapie" karty
+   (+700ms przy wyjściu z sekcji) — stąd wrażenie "trzeba przewinąć dwa
+   razy". Zamienione na płynne 1:1 mapowanie ruchu kółka myszy na scroll,
+   bez cooldownu; domykanie do karty zostawione natywnemu CSS
+   `scroll-snap-type`.
+
+Jeśli w przyszłości ktoś chce przywrócić WebGL shader, kod został w
+`assets/js/runtime.js` (funkcje `initSilkShader` / `initLazyShaders`),
+ale **nie powinien być domyślnie włączony** — tylko jako opt-in.
 - **Ostatnia aktualizacja**: 2026-07-09
 
 ---
