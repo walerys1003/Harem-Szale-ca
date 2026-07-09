@@ -123,6 +123,7 @@
     }
 
     function tick() {
+      if (document.hidden) { requestAnimationFrame(tick); return; }
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       const dpr = window.devicePixelRatio || 1;
       for (const p of particles) {
@@ -157,6 +158,19 @@
     if (!canvasEl) return;
     const gl = canvasEl.getContext('webgl') || canvasEl.getContext('experimental-webgl');
     if (!gl) return;
+
+    // Wykryj software rendering (SwiftShader/LLVMpipe — brak realnego GPU).
+    // Renderowanie ciężkiego fbm-noise shadera programowo potrafi zamulić
+    // całą kartę/urządzenie — w takim przypadku po prostu pomijamy shader.
+    try {
+      const dbgInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      if (dbgInfo) {
+        const renderer = gl.getParameter(dbgInfo.UNMASKED_RENDERER_WEBGL) || '';
+        if (/swiftshader|llvmpipe|software/i.test(renderer)) {
+          return; // brak realnego GPU — canvas zostaje przezroczysty (tło CSS wystarczy)
+        }
+      }
+    } catch (e) { /* ignoruj — kontynuuj normalnie */ }
 
     const palettes = {
       noir:   { a: [0.020, 0.020, 0.031], b: [0.084, 0.110, 0.184], c: [0.420, 0.115, 0.184] },
@@ -266,13 +280,34 @@
     }
 
     const start = performance.now();
-    function render() {
+    let isVisible = true; // domyślnie true, IO poprawi po pierwszym callbacku
+    let rafId = null;
+    const FRAME_MS = 1000 / 30; // throttle do ~30fps — shader jest tłem, nie wymaga 60fps
+    let lastFrame = 0;
+
+    function frame(now) {
+      rafId = requestAnimationFrame(frame);
+      if (!isVisible) return;
+      if (now - lastFrame < FRAME_MS) return;
+      lastFrame = now;
       resize();
-      gl.uniform1f(uT, (performance.now() - start) / 1000);
+      gl.uniform1f(uT, (now - start) / 1000);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      requestAnimationFrame(render);
     }
-    render();
+    rafId = requestAnimationFrame(frame);
+
+    // Renderuj tylko gdy canvas jest w viewporcie (lub blisko niego) —
+    // zapobiega zamuleniu CPU/GPU przez wiele równoległych shaderów offscreen
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { isVisible = e.isIntersecting; });
+      }, { rootMargin: '200px 0px 200px 0px', threshold: 0 });
+      io.observe(canvasEl);
+    }
+    // Pauza całkowita gdy karta w tle (np. przełączenie zakładki)
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) isVisible = false;
+    });
   }
 
   /* ============== REVEAL ON SCROLL ============== */
@@ -532,9 +567,33 @@
     initReveal();
     initParallax();
     initDramatis();
-    document.querySelectorAll('[data-shader]').forEach(c => {
-      initSilkShader(c, c.dataset.shader);
-    });
+    initLazyShaders();
+  }
+
+  /* ============== LAZY SHADER INIT ==============
+     Kompilacja WebGL (5x jednocześnie) na starcie blokowała main thread
+     na wiele sekund, zwłaszcza bez sprzętowego GPU (software WebGL/
+     SwiftShader fallback). Zamiast inicjalizować wszystkie shadery od
+     razu, czekamy aż canvas faktycznie wejdzie w viewport (lub blisko
+     niego) i kompilujemy go dokładnie raz, w tym momencie. ============= */
+  function initLazyShaders() {
+    const canvases = document.querySelectorAll('[data-shader]');
+    if (!canvases.length) return;
+    if (!('IntersectionObserver' in window)) {
+      // Brak wsparcia IO — fallback: inicjalizuj wszystkie (stare zachowanie)
+      canvases.forEach(c => initSilkShader(c, c.dataset.shader));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const canvas = entry.target;
+          io.unobserve(canvas);
+          initSilkShader(canvas, canvas.dataset.shader);
+        }
+      });
+    }, { rootMargin: '300px 0px 300px 0px', threshold: 0 });
+    canvases.forEach(c => io.observe(c));
   }
 
   if (document.readyState === 'loading') {
