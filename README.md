@@ -70,7 +70,14 @@ o Sułtanie İbrahimie I i upadku Imperium Osmańskiego (1640—1648).
 
 - **Typ**: Statyczna strona HTML/CSS/JS (vanilla, zero dependencies)
 - **Storage**: Brak (statyczne pliki)
-- **Assety**: 27 plików obrazów (~25 MB) + 2 CSS + 2 JS
+- **Assety**: 27 plików obrazów WebP (~2.2 MB, wcześniej ~28 MB w JPG/PNG) + 2 CSS + 2 JS
+
+### ⚡ Optymalizacja wydajności (2026-07-09)
+Strona blokowała się na kilkanaście–20+ sekund przy pierwszym ładowaniu. Przyczyny i naprawa:
+1. **Obrazy 28 MB → 2.2 MB**: konwersja wszystkich JPG/PNG na WebP (redukcja ~92%)
+2. **Lazy loading**: dodano `loading="lazy"` do wszystkich obrazów poza hero (above-the-fold)
+3. **5x WebGL shader compile na starcie → leniwa inicjalizacja**: kompilacja 5 shaderów fragmentowych ("jedwabna mgła") jednocześnie przy starcie blokowała main thread na wiele sekund (zwłaszcza bez sprzętowego GPU / software WebGL fallback). Teraz każdy shader kompiluje się dokładnie raz, dopiero gdy jego canvas wchodzi w viewport (IntersectionObserver, `initLazyShaders()` w `runtime.js`)
+4. Zweryfikowano realny czas ładowania przez Performance API: **domInteractive ≈ 525ms** (poprzednio dziesiątki sekund blokady)
 
 ### Struktura assetów:
 ```
