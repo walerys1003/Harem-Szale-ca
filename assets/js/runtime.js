@@ -387,7 +387,14 @@
           // Przeglądarka zablokowała autoplay z dźwiękiem (typowa polityka mobile/Chrome/Safari) —
           // czekamy na pierwszą interakcję użytkownika (klik/tap/scroll/klawisz) i wtedy startujemy.
           setUIState(false, false);
-          const resume = () => {
+          const resume = (e) => {
+            // Klik na sam przycisk muzyki ma WŁASNY handler (poniżej) — jeśli
+            // pozwolimy też temu globalnemu listenerowi zareagować na ten sam
+            // gest (pointerdown bąbelkuje do window PRZED click), dochodzi do
+            // wyścigu: audio startuje tutaj, a handler kliknięcia widzi
+            // audio.paused === false i od razu je wycisza. Efekt: muzyka nigdy
+            // nie jest słyszalna przy pierwszym kliknięciu przycisku.
+            if (e && e.target && (e.target === btn || btn.contains(e.target))) return;
             if (userMuted) { cleanup(); return; }
             audio.play().then(() => {
               fadeVolumeTo(TARGET_VOLUME, 1400);
@@ -400,9 +407,9 @@
             window.removeEventListener('keydown', resume);
             window.removeEventListener('scroll', resume);
           }
-          window.addEventListener('pointerdown', resume, { once: true, passive: true });
-          window.addEventListener('keydown', resume, { once: true });
-          window.addEventListener('scroll', resume, { once: true, passive: true });
+          window.addEventListener('pointerdown', resume, { passive: true });
+          window.addEventListener('keydown', resume);
+          window.addEventListener('scroll', resume, { passive: true });
         });
       }
     }
