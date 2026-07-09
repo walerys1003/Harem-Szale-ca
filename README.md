@@ -44,7 +44,9 @@ o Sułtanie İbrahimie I i upadku Imperium Osmańskiego (1640—1648).
 
 ## 🌐 URL Produkcyjny
 
-**https://75721b6d-c795-4a3c-b412-b347c2a7a54c.vip.gensparksite.com**
+**https://sagaturecka.pages.dev**
+
+**GitHub**: https://github.com/walerys1003/Harem-Szale-ca
 
 ---
 
@@ -141,11 +143,13 @@ assets/
 
 ## Wdrożenie
 
-- **Platforma**: Cloudflare Pages
-- **Typ**: Statyczna strona HTML (bez build step)
+- **Platforma**: Cloudflare Pages (konto własne, projekt: `sagaturecka`)
+- **Domena**: sagaturecka.pages.dev
+- **Typ**: Statyczna strona HTML (bez build step, deploy folderu `dist/`)
 - **Status**: ✅ Aktywny
 - **Stos**: Vanilla HTML5 + CSS3 + ES6+ JS
 - **Cache**: Cloudflare CDN (headers skonfigurowane w `_headers`)
+- **Redeploy**: `cp -r index.html robots.txt sitemap.xml _headers _redirects assets dist/ && npx wrangler pages deploy dist --project-name sagaturecka`
 - **Ostatnia aktualizacja**: 2026-07-09
 
 ---
