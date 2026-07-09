@@ -580,8 +580,15 @@
           return; // krawędź — puszczamy naturalny scroll strony
         }
         e.preventDefault();
+        // scrollTo() (nie zwykłe przypisanie scrollLeft +=) — to jedyny sposób,
+        // żeby przewijanie realnie ruszało przy KAŻDYM, nawet najmniejszym
+        // ruchu kółka myszy. BEZ żadnego auto-snap/auto-centrowania po ruchu —
+        // wcześniejsza wersja z "dośrodkowaniem karty po zatrzymaniu scrolla"
+        // powodowała, że po jednym małym ruchu myszką tor odjeżdżał, a potem
+        // sam wracał do tej samej karty, co wyglądało jak "scroll nie działa".
+        // Teraz przewijanie jest w 100% swobodne — jedzie tam, gdzie user
+        // przewinie, bez żadnego przyciągania z powrotem.
         wrap.scrollTo({ left: wrap.scrollLeft + delta, behavior: 'auto' });
-        scheduleSnap();
       }, { passive: false });
 
       // DRAG myszką — działa tylko wewnątrz toru kart, NIE wpływa na scroll strony
@@ -594,7 +601,6 @@
         scrollLeftStart = wrap.scrollLeft;
       });
       window.addEventListener('mouseup', () => {
-        if (isDown) scheduleSnap();
         isDown = false;
         wrap.style.cursor = 'grab';
       });
@@ -606,44 +612,6 @@
         e.preventDefault();
         wrap.scrollTo({ left: scrollLeftStart - dx * 1.4, behavior: 'auto' });
       });
-
-      // Touch swipe (natywny scroll na mobile) — po zatrzymaniu też dośrodkuj kartę
-      wrap.addEventListener('touchend', () => scheduleSnap(), { passive: true });
-
-      /* ============== PROGRAMOWE CENTROWANIE KARTY (zamiast CSS scroll-snap) ==
-         scroll-snap-type (mandatory ORAZ proximity) zostało CAŁKOWICIE usunięte
-         z CSS, bo blokowało/odrzucało każde małe przesunięcie scrollLeft —
-         to była prawdziwa przyczyna, dla której scroll na hover w ogóle nie
-         ruszał kartami (potwierdzone testem: scrollTo(+100..+300px) było
-         ignorowane przez przeglądarkę przy aktywnym snap, dopiero >~400px
-         przełamywało blokadę). Teraz przewijanie jest w 100% swobodne (żadnej
-         blokady), a wyśrodkowanie aktywnej karty realizujemy SAMI: po każdym
-         scrollu czekamy na "cisza w scrollu" (debounce 140ms) i płynnie
-         (behavior:'smooth') dosuwamy tor tak, by najbliższa karta była
-         wycentrowana w .dramatis-track-wrap — czyli identyczny efekt wizualny
-         jak dawał natywny scroll-snap-align:center, ale bez blokowania scrolla. */
-      let snapTimer = null;
-      function scheduleSnap() {
-        clearTimeout(snapTimer);
-        snapTimer = setTimeout(snapToNearestCard, 140);
-      }
-      function snapToNearestCard() {
-        if (isDown) return; // user wciąż trzyma/drag'uje — nie przerywaj
-        const wrapRect = wrap.getBoundingClientRect();
-        const wrapCenter = wrapRect.left + wrapRect.width / 2;
-        let nearest = null, nearestDist = Infinity;
-        for (const card of cards) {
-          const r = card.getBoundingClientRect();
-          const cardCenter = r.left + r.width / 2;
-          const dist = Math.abs(cardCenter - wrapCenter);
-          if (dist < nearestDist) { nearestDist = dist; nearest = card; }
-        }
-        if (!nearest || nearestDist < 2) return; // już wycentrowana — nic do zrobienia
-        const r = nearest.getBoundingClientRect();
-        const cardCenter = r.left + r.width / 2;
-        const offset = cardCenter - wrapCenter;
-        wrap.scrollTo({ left: wrap.scrollLeft + offset, behavior: 'smooth' });
-      }
 
       window.__dramatisInited = true;
     } catch (err) {
