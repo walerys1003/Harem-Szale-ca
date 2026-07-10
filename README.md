@@ -9,7 +9,7 @@ o Sułtanie İbrahimie I i upadku Imperium Osmańskiego (1640—1648).
 
 - **Nazwa**: Harem Szaleńca — Złota Klatka
 - **Autor**: Tomasz Kotliński (kotlinski.tomek@gmail.com)
-- **Cel**: Landing page tetralogii historycznej prezentujący autora, 4 tomy, 10 postaci, 4 lokacje i atlas Topkapı
+- **Cel**: Landing page tetralogii historycznej prezentujący autora, 4 tomy, 11 postaci, 4 lokacje i atlas Topkapı
 - **Estetyka**: Turecki cinematic — obsydian + złoto + burgund + kaligrafia arabska + ornamentyka Iznik
 
 ---
@@ -21,7 +21,7 @@ o Sułtanie İbrahimie I i upadku Imperium Osmańskiego (1640—1648).
 2. **Manifest** — cinematic cytat z drop-cap numeral 720px, word-reveal animacja
 3. **Autor** — Tomasz Kotliński: timeline 4 punkty, 4 metryki (IV tomy / 7 lat / 2036 str / 1640–1648)
 4. **Tetralogia** — 4 tomy szczegółowo z okładkami PNG i CTA "Kup Teraz" → Ridero
-5. **Cienie Pałacu** — 10 postaci Dramatis Personae (horizontal scroll-snap + scroll-lock)
+5. **Cienie Pałacu** — 11 postaci Dramatis Personae (horizontal scroll-snap + scroll-lock), w tym Yeniçeri Ağası (Aga Janczarów)
 6. **Świat Powieści** — 4 lokacje (Kafes, Sala Tronowa, Harem, Bosfor)
 7. **Atlas** — aerial mapa Topkapı z 7 hotspotami
 8. **Footer** — newsletter + linki + wax seal SVG
@@ -70,7 +70,7 @@ o Sułtanie İbrahimie I i upadku Imperium Osmańskiego (1640—1648).
 
 - **Typ**: Statyczna strona HTML/CSS/JS (vanilla, zero dependencies)
 - **Storage**: Brak (statyczne pliki)
-- **Assety**: 26 zdjęć bazowych WebP + 44 responsywne warianty (`-XXXw.webp`) + 2 CSS + 2 JS
+- **Assety**: 27 zdjęć bazowych WebP + 44+ responsywne warianty (`-XXXw.webp`) + 2 CSS + 2 JS
 
 ### ⚡ Optymalizacja wydajności (2026-07-09)
 Strona blokowała się na kilkanaście–20+ sekund przy pierwszym ładowaniu. Przyczyny i naprawa:
@@ -129,9 +129,29 @@ assets/
     ├── topkapi_aerial.jpg       # Aerial Topkapı (atlas)
     ├── author_new.jpg           # Portret autora
     ├── covers/                  # 4 okładki PNG (transparent)
-    ├── characters/              # 10 portretów AI hyperrealistic
+    ├── characters/              # 11 portretów — pełne ilustracje "kart" (687×1024, bez przycinania)
     └── locations/               # 4 lokacje AI cinematic
 ```
+
+### 🎨 Wymiana portretów postaci na pełne ilustracje (2026-07-10)
+
+Wszystkie 11 portretów w sekcji "Cienie Pałacu" zostały zamienione na
+pełne, oryginalne ilustracje w stylu kart kolekcjonerskich (pieczęcie
+lakowe, banery z imieniem, ornamentyka, tło narracyjne) — **bez
+żadnego manualnego przycinania**. Źródła: 687×1024 px, skonwertowane
+do WebP (quality 90) w 3 wariantach (`400w`, `700w`, pełny 687w).
+Wizualne dopasowanie do kart (fixed aspect-ratio) odbywa się wyłącznie
+przez istniejącą regułę CSS `object-fit: cover; object-position:
+center 22%` w `imperium.css` — bez modyfikacji plików źródłowych.
+
+Dodano też 11. postać nieobecną wcześniej na stronie: **Yeniçeri
+Ağası** (Aga Janczarów, dowódca korpusu 40 000 żołnierzy, kluczowa
+postać buntu VIII 1648) — pełna karta z bio, cytatem i statystykami.
+Licznik postaci zaktualizowany z 10 → 11.
+
+Dodano cache-busting (`?v=full1`) do wszystkich `<img>`/`srcset`
+referencji portretów, aby wymusić odświeżenie u użytkowników z
+zbuforowanymi starszymi wersjami plików o tych samych nazwach.
 
 ---
 
@@ -191,7 +211,8 @@ assets/
 - **Status**: ✅ Aktywny
 - **Stos**: Vanilla HTML5 + CSS3 + ES6+ JS
 - **Cache**: Cloudflare CDN (headers skonfigurowane w `_headers`)
-- **Redeploy**: `cp -r index.html robots.txt sitemap.xml _headers _redirects assets dist/ && npx wrangler pages deploy dist --project-name sagaturecka`
+- **Redeploy**: `npm run build && npx wrangler pages deploy dist --project-name sagaturecka --branch main --commit-dirty=true`
+- **Ostatni deploy**: 2026-07-10 — https://8fba5b76.sagaturecka.pages.dev (wymiana 11 portretów postaci na pełne ilustracje + dodanie karty Yeniçeri Ağası)
 
 ### Poprawki wydajności i UX (2026-07-09)
 

@@ -26,3 +26,4 @@ pids/
 *.tar.gz
 *.zip
 *.bak
+tmp_new_images/
